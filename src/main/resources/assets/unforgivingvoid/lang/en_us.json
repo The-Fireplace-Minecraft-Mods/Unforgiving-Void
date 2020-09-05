@@ -1,0 +1,15 @@
+{
+  "text.autoconfig.unforgivingvoid.title": "Unforgiving Void Config",
+  "text.autoconfig.unforgivingvoid.option.triggerAtY": "Trigger At Y",
+  "text.autoconfig.unforgivingvoid.option.triggerAtY.@Tooltip": "The Y level at which Unforgiving Void should send the player to the Nether.",
+  "text.autoconfig.unforgivingvoid.option.dropObsidian": "Drop Obsidian",
+  "text.autoconfig.unforgivingvoid.option.dropObsidian.@Tooltip": "Drop obsidian for the player when they appear in the Nether.",
+  "text.autoconfig.unforgivingvoid.option.fireResistanceSeconds": "Fire Resistance Seconds",
+  "text.autoconfig.unforgivingvoid.option.fireResistanceSeconds.@Tooltip[0]": "How many seconds the player should get",
+  "text.autoconfig.unforgivingvoid.option.fireResistanceSeconds.@Tooltip[1]": "fire resistance for when they appear in the Nether.",
+  "text.autoconfig.unforgivingvoid.option.horizontalDistanceOffset": "Horizontal Distance Offset",
+  "text.autoconfig.unforgivingvoid.option.horizontalDistanceOffset.@Tooltip": "Put the player approximately this far away horizontally from where they fell.",
+  "text.autoconfig.unforgivingvoid.option.dimensionFilter": "Dimension Filter",
+  "text.autoconfig.unforgivingvoid.option.dimensionFilter.@Tooltip[0]": "This specifies which dimensions Unforgiving Void is active in.",
+  "text.autoconfig.unforgivingvoid.option.dimensionFilter.@Tooltip[1]": "If it contains *, it is a denylist. Otherwise, it is an allowlist."
+}
