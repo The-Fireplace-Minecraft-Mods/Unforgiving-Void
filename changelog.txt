@@ -1,2 +1,6 @@
 Updated to 1.16.2
 Rewrite for Fabric
+Improved stability and changed behaviors:
+- The infinite teleporting bug should finally be dead
+- The player will no longer fall after entering the nether, instead they will spawn on a solid block.
+- The player is able to spawn in lava, so they are given fire resistance for long enough that they can get to safety, 3 minutes by default.
