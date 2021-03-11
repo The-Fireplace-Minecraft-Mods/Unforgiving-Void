@@ -3,7 +3,6 @@ package the_fireplace.unforgivingvoid.mixin;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,10 +13,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,7 +25,7 @@ import java.util.Random;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
-    public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+    protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
 
@@ -39,7 +36,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             if(server != null) {
                 boolean doTeleport = UnforgivingVoid.config.dimensionFilter.contains("*");
                 for (String dim : UnforgivingVoid.config.dimensionFilter)
-                    if (!dim.equals("*") && world.getRegistryKey().getValue().toString().toLowerCase().equals(dim.toLowerCase())) {
+                    if (!"*".equals(dim) && world.getRegistryKey().getValue().toString().equalsIgnoreCase(dim)) {
                         doTeleport = !doTeleport;
                         break;
                     }
