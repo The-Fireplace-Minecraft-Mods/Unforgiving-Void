@@ -1,4 +1,6 @@
 Additions:
+Added the ability to set up per-dimension configs
+Added the ability to choose target dimensio: You can now configure it to go overworld to nether, nether to end, etc.
 
 Changes:
 

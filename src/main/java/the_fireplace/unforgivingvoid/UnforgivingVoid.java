@@ -1,7 +1,6 @@
 package the_fireplace.unforgivingvoid;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import dev.the_fireplace.lib.api.chat.TranslatorManager;
 import net.fabricmc.api.ModInitializer;
 
 public class UnforgivingVoid implements ModInitializer {
@@ -10,7 +9,6 @@ public class UnforgivingVoid implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
-        config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        TranslatorManager.getInstance().addTranslator(MODID);
     }
 }
