@@ -23,7 +23,7 @@
       "the_fireplace.unforgivingvoid.UnforgivingVoid"
     ],
     "modmenu": [
-      "the_fireplace.unforgivingvoid.client.ModMenuIntegration"
+      "the_fireplace.unforgivingvoid.config.ModMenuIntegration"
     ]
   },
   "mixins": [
