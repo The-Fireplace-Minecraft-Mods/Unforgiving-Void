@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.util.registry.RegistryKey;
 import the_fireplace.unforgivingvoid.config.DimensionConfig;
 import the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 
@@ -37,8 +37,8 @@ public final class VoidTransfer {
         serverPlayerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60, 3));
         Random rand = world.random;
 
-        World targetWorld = server.getRegistryManager().get(Registry.WORLD_KEY).get(new Identifier(dimensionConfig.getTargetDimension()));
-        if (!(targetWorld instanceof ServerWorld)) {
+        ServerWorld targetWorld = server.getWorld(RegistryKey.of(Registry.WORLD_KEY, new Identifier(dimensionConfig.getTargetDimension())));
+        if (targetWorld == null) {
             UnforgivingVoid.getLogger().error("Target world not found: " + dimensionConfig.getTargetDimension());
             return;
         }
