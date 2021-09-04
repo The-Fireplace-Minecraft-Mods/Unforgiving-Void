@@ -16,7 +16,7 @@
   "icon": "assets/unforgivingvoid/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "di-main": [
       "the_fireplace.unforgivingvoid.UnforgivingVoid"
     ],
     "modmenu": [
