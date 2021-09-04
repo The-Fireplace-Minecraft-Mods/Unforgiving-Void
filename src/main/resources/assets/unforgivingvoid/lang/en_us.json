@@ -1,7 +1,7 @@
 {
   "text.autoconfig.unforgivingvoid.title": "Unforgiving Void Config",
-  "text.autoconfig.unforgivingvoid.option.triggerAtY": "Trigger At Y",
-  "text.autoconfig.unforgivingvoid.option.triggerAtY.@Tooltip": "The Y level at which Unforgiving Void should send the player to the Nether.",
+  "text.autoconfig.unforgivingvoid.option.triggerDistance": "Trigger Distance",
+  "text.autoconfig.unforgivingvoid.option.triggerDistance.@Tooltip": "The distance below world bottom which Unforgiving Void should send the player to the target dimension at.",
   "text.autoconfig.unforgivingvoid.option.dropObsidian": "Drop Obsidian",
   "text.autoconfig.unforgivingvoid.option.dropObsidian.@Tooltip": "Drop obsidian for the player when they appear in the Nether.",
   "text.autoconfig.unforgivingvoid.option.fireResistanceSeconds": "Fire Resistance Seconds",

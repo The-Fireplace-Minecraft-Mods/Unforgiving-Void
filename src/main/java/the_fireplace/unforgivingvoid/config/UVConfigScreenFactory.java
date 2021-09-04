@@ -12,7 +12,9 @@ import the_fireplace.unforgivingvoid.UnforgivingVoid;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
@@ -65,7 +67,67 @@ public final class UVConfigScreenFactory {
             dimensionConfig.isEnabled(),
             defaultDimensionConfig.isEnabled(),
             dimensionConfig::setEnabled,
-            (byte) 2
+            (byte) 0
+        );
+        configScreenBuilder.addByteField(
+            OPTION_TRANSLATION_BASE + "triggerDistance",
+            dimensionConfig.getTriggerDistance(),
+            defaultDimensionConfig.getTriggerDistance(),
+            dimensionConfig::setTriggerDistance,
+            (byte) 1,
+            Byte.MAX_VALUE
+        );
+        configScreenBuilder.addBoolToggle(
+            OPTION_TRANSLATION_BASE + "dropObsidian",
+            dimensionConfig.isDropObsidian(),
+            defaultDimensionConfig.isDropObsidian(),
+            dimensionConfig::setDropObsidian
+        );
+        configScreenBuilder.addIntField(
+            OPTION_TRANSLATION_BASE + "fireResistanceSeconds",
+            dimensionConfig.getFireResistanceSeconds(),
+            defaultDimensionConfig.getFireResistanceSeconds(),
+            dimensionConfig::setFireResistanceSeconds,
+            0,
+            Integer.MAX_VALUE
+        );
+        configScreenBuilder.addIntField(
+            OPTION_TRANSLATION_BASE + "horizontalDistanceOffset",
+            dimensionConfig.getHorizontalDistanceOffset(),
+            defaultDimensionConfig.getHorizontalDistanceOffset(),
+            dimensionConfig::setHorizontalDistanceOffset,
+            0,
+            Integer.MAX_VALUE
+        );
+        Set<String> dimensionIds = new HashSet<>();
+        for (Identifier dimensionId : dimensionConfigManager.getDimensionIds()) {
+            dimensionIds.add(dimensionId.toString());
+        }
+        configScreenBuilder.addStringDropdown(
+            OPTION_TRANSLATION_BASE + "targetDimension",
+            dimensionConfig.getTargetDimension(),
+            defaultDimensionConfig.getTargetDimension(),
+            dimensionIds,
+            dimensionConfig::setTargetDimension,
+            true
+        );
+        configScreenBuilder.addShortField(
+            OPTION_TRANSLATION_BASE + "approximateSpawnY",
+            dimensionConfig.getApproximateSpawnY(),
+            defaultDimensionConfig.getApproximateSpawnY(),
+            dimensionConfig::setApproximateSpawnY
+        );
+        configScreenBuilder.addBoolToggle(
+            OPTION_TRANSLATION_BASE + "attemptFindSafePlatform",
+            dimensionConfig.isAttemptFindSafePlatform(),
+            defaultDimensionConfig.isAttemptFindSafePlatform(),
+            dimensionConfig::setAttemptFindSafePlatform
+        );
+        configScreenBuilder.addBoolToggle(
+            OPTION_TRANSLATION_BASE + "avoidSkySpawning",
+            dimensionConfig.isAvoidSkySpawning(),
+            defaultDimensionConfig.isAvoidSkySpawning(),
+            dimensionConfig::setAvoidSkySpawning
         );
     }
 

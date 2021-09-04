@@ -30,7 +30,7 @@ public final class DefaultDimensionConfig extends DimensionConfig implements Con
     @Override
     public void readFrom(StorageReadBuffer buffer) {
         isEnabled = buffer.readBool("isEnabled", true);
-        triggerAtY = buffer.readShort("triggerAtY", (short) -32);
+        triggerDistance = buffer.readByte("triggerDistance", (byte) 32);
         dropObsidian = buffer.readBool("dropObsidian", false);
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", 180);
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", 128);

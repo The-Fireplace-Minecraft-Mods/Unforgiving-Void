@@ -7,7 +7,7 @@ import dev.the_fireplace.lib.api.lazyio.interfaces.HierarchicalConfig;
 
 public class DimensionConfig implements HierarchicalConfig {
     protected boolean isEnabled;
-    protected short triggerAtY;
+    protected byte triggerDistance;
     protected boolean dropObsidian;
     protected int fireResistanceSeconds;
     protected int horizontalDistanceOffset;
@@ -21,7 +21,7 @@ public class DimensionConfig implements HierarchicalConfig {
     public DimensionConfig clone() {
         DimensionConfig clone = new DimensionConfig();
         clone.isEnabled = isEnabled;
-        clone.triggerAtY = triggerAtY;
+        clone.triggerDistance = triggerDistance;
         clone.dropObsidian = dropObsidian;
         clone.fireResistanceSeconds = fireResistanceSeconds;
         clone.horizontalDistanceOffset = horizontalDistanceOffset;
@@ -37,7 +37,7 @@ public class DimensionConfig implements HierarchicalConfig {
     public void readFrom(StorageReadBuffer buffer) {
         DimensionConfig defaultConfig = DIContainer.get().getInstance(DefaultDimensionConfig.class);
         isEnabled = buffer.readBool("isEnabled", defaultConfig.isEnabled());
-        triggerAtY = buffer.readShort("triggerAtY", defaultConfig.getTriggerAtY());
+        triggerDistance = buffer.readByte("triggerDistance", defaultConfig.getTriggerDistance());
         dropObsidian = buffer.readBool("dropObsidian", defaultConfig.isDropObsidian());
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", defaultConfig.getFireResistanceSeconds());
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", defaultConfig.getHorizontalDistanceOffset());
@@ -50,7 +50,7 @@ public class DimensionConfig implements HierarchicalConfig {
     @Override
     public void writeTo(StorageWriteBuffer buffer) {
         buffer.writeBool("isEnabled", isEnabled);
-        buffer.writeShort("triggerAtY", triggerAtY);
+        buffer.writeByte("triggerDistance", triggerDistance);
         buffer.writeBool("dropObsidian", dropObsidian);
         buffer.writeInt("fireResistanceSeconds", fireResistanceSeconds);
         buffer.writeInt("horizontalDistanceOffset", horizontalDistanceOffset);
@@ -68,12 +68,12 @@ public class DimensionConfig implements HierarchicalConfig {
         this.isEnabled = isEnabled;
     }
 
-    public short getTriggerAtY() {
-        return triggerAtY;
+    public byte getTriggerDistance() {
+        return triggerDistance;
     }
 
-    public void setTriggerAtY(short triggerAtY) {
-        this.triggerAtY = triggerAtY;
+    public void setTriggerDistance(byte triggerDistance) {
+        this.triggerDistance = triggerDistance;
     }
 
     public boolean isDropObsidian() {

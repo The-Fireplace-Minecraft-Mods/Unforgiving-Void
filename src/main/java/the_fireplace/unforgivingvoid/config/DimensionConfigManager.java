@@ -5,6 +5,7 @@ import dev.the_fireplace.lib.api.lazyio.injectables.ConfigStateManager;
 import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFactory;
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.dimension.DimensionType;
 import the_fireplace.unforgivingvoid.UnforgivingVoid;
 
 import javax.inject.Inject;
@@ -14,11 +15,11 @@ import java.util.Set;
 
 @Singleton
 public final class DimensionConfigManager {
+    public static final String DOMAIN = UnforgivingVoid.MODID + "_customDimensionConfigs";
+    public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(DimensionType.OVERWORLD_ID, DimensionType.THE_NETHER_ID, DimensionType.THE_END_ID);
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
     private final DefaultDimensionConfig defaultSettings;
-
-    private final Set<Identifier> allowedDimensionIdentifiers;
 
     @Inject
     public DimensionConfigManager(
@@ -28,16 +29,17 @@ public final class DimensionConfigManager {
     ) {
         this.defaultSettings = defaultSettings;
         this.configStateManager = configStateManager;
-        this.allowedDimensionIdentifiers = Sets.newHashSet();//TODO Correct this
-        this.hierarchicalConfigManager = hierarchicalConfigManagerFactory.createNamespaced(
-            UnforgivingVoid.MODID + "_customDimensionConfigs",
+        //noinspection ConstantConditions
+        this.hierarchicalConfigManager = hierarchicalConfigManagerFactory.createDynamicNamespaced(
+            DOMAIN,
             defaultSettings,
-            allowedDimensionIdentifiers
+            DEFAULT_DIMENSIONS,
+            () -> UnforgivingVoid.getServer().getRegistryManager().getDimensionTypes().getIds()
         );
     }
 
-    public Collection<Identifier> getAllowedDimensionIds() {
-        return allowedDimensionIdentifiers;
+    public Iterable<Identifier> getDimensionIds() {
+        return hierarchicalConfigManager.getAllowedModuleIds();
     }
 
     public Collection<Identifier> getDimensionIdsWithCustomSettings() {
@@ -45,7 +47,7 @@ public final class DimensionConfigManager {
     }
 
     public Collection<Identifier> getDimensionIdsWithoutCustomSettings() {
-        Set<Identifier> idsWithoutSettings = Sets.newHashSet(allowedDimensionIdentifiers);
+        Set<Identifier> idsWithoutSettings = Sets.newHashSet(hierarchicalConfigManager.getAllowedModuleIds());
         idsWithoutSettings.removeAll(getDimensionIdsWithCustomSettings());
 
         return idsWithoutSettings;
