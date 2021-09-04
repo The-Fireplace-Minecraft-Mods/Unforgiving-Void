@@ -2,9 +2,8 @@
   "schemaVersion": 1,
   "id": "unforgivingvoid",
   "version": "${version}",
-
   "name": "Unforgiving Void",
-  "description": "Fall into the Void and end up in the Nether!",
+  "description": "Fall into the Void and end up in another dimension!",
   "authors": [
     "The_Fireplace"
   ],
@@ -13,17 +12,15 @@
     "sources": "https://github.com/The-Fireplace-Minecraft-Mods/Unforgiving-Void",
     "issues": "https://github.com/The-Fireplace-Minecraft-Mods/Unforgiving-Void/issues"
   },
-
-  "license": "GPL-3.0-or-later",
+  "license": "MPL-2.0",
   "icon": "assets/unforgivingvoid/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
       "the_fireplace.unforgivingvoid.UnforgivingVoid"
     ],
     "modmenu": [
-      "the_fireplace.unforgivingvoid.config.ModMenuIntegration"
+      ""
     ]
   },
   "mixins": [
@@ -32,7 +29,8 @@
 
   "depends": {
     "fabricloader": ">=0.7.4",
-    "minecraft": ">=1.16"
+    "minecraft": ">=1.16",
+    "fireplacelib": ">=5.5 <6"
   },
 
   "suggests": {
