@@ -1,5 +1,8 @@
-package the_fireplace.unforgivingvoid.usecase;
+package dev.the_fireplace.unforgivingvoid.usecase;
 
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
+import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
+import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -14,9 +17,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import the_fireplace.unforgivingvoid.config.DimensionConfig;
-import the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 
 import javax.inject.Inject;
 

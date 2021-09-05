@@ -1,7 +1,7 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 import dev.the_fireplace.annotateddi.api.di.Implementation;
-import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
+import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Singleton;
 

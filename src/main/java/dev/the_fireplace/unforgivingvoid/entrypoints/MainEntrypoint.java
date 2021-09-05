@@ -1,13 +1,13 @@
-package the_fireplace.unforgivingvoid.entrypoints;
+package dev.the_fireplace.unforgivingvoid.entrypoints;
 
 import com.google.inject.Injector;
 import dev.the_fireplace.annotateddi.api.entrypoints.DIModInitializer;
 import dev.the_fireplace.lib.api.chat.injectables.TranslatorFactory;
 import dev.the_fireplace.lib.api.lazyio.injectables.ReloadableManager;
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
+import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 
 public final class MainEntrypoint implements DIModInitializer {
 

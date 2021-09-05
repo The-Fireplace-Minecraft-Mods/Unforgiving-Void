@@ -1,4 +1,4 @@
-package the_fireplace.unforgivingvoid;
+package dev.the_fireplace.unforgivingvoid;
 
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;

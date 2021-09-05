@@ -1,5 +1,6 @@
-package the_fireplace.unforgivingvoid.usecase;
+package dev.the_fireplace.unforgivingvoid.usecase;
 
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
@@ -8,7 +9,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 
 import java.util.Optional;
 import java.util.Random;

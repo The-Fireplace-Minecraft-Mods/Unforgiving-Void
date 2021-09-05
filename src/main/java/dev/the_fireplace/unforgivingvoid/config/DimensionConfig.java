@@ -1,10 +1,10 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 import dev.the_fireplace.annotateddi.api.DIContainer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageReadBuffer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageWriteBuffer;
 import dev.the_fireplace.lib.api.lazyio.interfaces.HierarchicalConfig;
-import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
+import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import java.util.Locale;
 

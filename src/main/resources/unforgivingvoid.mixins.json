@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "the_fireplace.unforgivingvoid.mixin",
+  "package": "dev.the_fireplace.unforgivingvoid.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ServerPlayerEntityMixin"

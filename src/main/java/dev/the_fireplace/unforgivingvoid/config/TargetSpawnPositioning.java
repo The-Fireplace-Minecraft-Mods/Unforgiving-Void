@@ -1,4 +1,4 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 public enum TargetSpawnPositioning {
     SIMILAR,

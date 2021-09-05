@@ -1,16 +1,16 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 import com.google.common.collect.Sets;
 import dev.the_fireplace.lib.api.chat.injectables.TranslatorFactory;
 import dev.the_fireplace.lib.api.chat.interfaces.Translator;
 import dev.the_fireplace.lib.api.client.injectables.ConfigScreenBuilderFactory;
 import dev.the_fireplace.lib.api.client.interfaces.ConfigScreenBuilder;
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
+import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Inject;
 import javax.inject.Named;

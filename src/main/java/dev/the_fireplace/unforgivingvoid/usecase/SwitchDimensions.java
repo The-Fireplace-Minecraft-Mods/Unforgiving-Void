@@ -1,4 +1,4 @@
-package the_fireplace.unforgivingvoid.usecase;
+package dev.the_fireplace.unforgivingvoid.usecase;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

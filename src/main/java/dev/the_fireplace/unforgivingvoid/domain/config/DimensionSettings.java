@@ -1,6 +1,6 @@
-package the_fireplace.unforgivingvoid.domain.config;
+package dev.the_fireplace.unforgivingvoid.domain.config;
 
-import the_fireplace.unforgivingvoid.config.TargetSpawnPositioning;
+import dev.the_fireplace.unforgivingvoid.config.TargetSpawnPositioning;
 
 public interface DimensionSettings {
     boolean isEnabled();

@@ -17,10 +17,10 @@
   "environment": "*",
   "entrypoints": {
     "di-main": [
-      "the_fireplace.unforgivingvoid.entrypoints.MainEntrypoint"
+      "dev.the_fireplace.unforgivingvoid.entrypoints.MainEntrypoint"
     ],
     "modmenu": [
-      "the_fireplace.unforgivingvoid.entrypoints.ModMenuEntrypoint"
+      "dev.the_fireplace.unforgivingvoid.entrypoints.ModMenuEntrypoint"
     ]
   },
   "mixins": [

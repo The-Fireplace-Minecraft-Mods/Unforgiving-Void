@@ -1,4 +1,4 @@
-package the_fireplace.unforgivingvoid.usecase;
+package dev.the_fireplace.unforgivingvoid.usecase;
 
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.server.MinecraftServer;

@@ -1,11 +1,11 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 import dev.the_fireplace.lib.api.io.interfaces.access.SimpleBuffer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageReadBuffer;
 import dev.the_fireplace.lib.api.lazyio.injectables.ConfigStateManager;
 import dev.the_fireplace.lib.api.lazyio.interfaces.Config;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
+import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Inject;
 import javax.inject.Named;

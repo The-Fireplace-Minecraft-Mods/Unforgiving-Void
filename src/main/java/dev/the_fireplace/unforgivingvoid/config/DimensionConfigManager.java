@@ -1,12 +1,12 @@
-package the_fireplace.unforgivingvoid.config;
+package dev.the_fireplace.unforgivingvoid.config;
 
 import com.google.common.collect.Sets;
 import dev.the_fireplace.lib.api.lazyio.injectables.ConfigStateManager;
 import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFactory;
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
+import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.dimension.DimensionType;
-import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
