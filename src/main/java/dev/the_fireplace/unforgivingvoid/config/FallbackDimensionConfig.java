@@ -39,6 +39,7 @@ public final class FallbackDimensionConfig extends DimensionConfig implements Co
         triggerDistance = buffer.readByte("triggerDistance", defaultSettings.getTriggerDistance());
         dropObsidian = buffer.readBool("dropObsidian", defaultSettings.isDropObsidian());
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", defaultSettings.getFireResistanceSeconds());
+        slowFallingSeconds = buffer.readInt("slowFallingSeconds", defaultSettings.getSlowFallingSeconds());
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", defaultSettings.getHorizontalDistanceOffset());
         targetDimension = buffer.readString("targetDimension", defaultSettings.getTargetDimension());
         transferPositionMode = TargetSpawnPositioning.valueOf(buffer.readString("transferPositionMode", defaultSettings.getTransferPositionMode().name()).toUpperCase(Locale.ROOT));

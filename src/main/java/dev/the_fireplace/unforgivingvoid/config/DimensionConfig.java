@@ -13,6 +13,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
     protected byte triggerDistance;
     protected boolean dropObsidian;
     protected int fireResistanceSeconds;
+    protected int slowFallingSeconds;
     protected int horizontalDistanceOffset;
     protected String targetDimension;
     protected TargetSpawnPositioning transferPositionMode;
@@ -25,6 +26,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         clone.triggerDistance = triggerDistance;
         clone.dropObsidian = dropObsidian;
         clone.fireResistanceSeconds = fireResistanceSeconds;
+        clone.slowFallingSeconds = slowFallingSeconds;
         clone.horizontalDistanceOffset = horizontalDistanceOffset;
         clone.targetDimension = targetDimension;
         clone.transferPositionMode = transferPositionMode;
@@ -39,6 +41,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         triggerDistance = buffer.readByte("triggerDistance", defaultConfig.getTriggerDistance());
         dropObsidian = buffer.readBool("dropObsidian", defaultConfig.isDropObsidian());
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", defaultConfig.getFireResistanceSeconds());
+        slowFallingSeconds = buffer.readInt("slowFallingSeconds", defaultConfig.getSlowFallingSeconds());
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", defaultConfig.getHorizontalDistanceOffset());
         targetDimension = buffer.readString("targetDimension", defaultConfig.getTargetDimension());
         transferPositionMode = TargetSpawnPositioning.valueOf(buffer.readString("transferPositionMode", defaultConfig.getTransferPositionMode().name()).toUpperCase(Locale.ROOT));
@@ -50,6 +53,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         buffer.writeByte("triggerDistance", triggerDistance);
         buffer.writeBool("dropObsidian", dropObsidian);
         buffer.writeInt("fireResistanceSeconds", fireResistanceSeconds);
+        buffer.writeInt("slowFallingSeconds", slowFallingSeconds);
         buffer.writeInt("horizontalDistanceOffset", horizontalDistanceOffset);
         buffer.writeString("targetDimension", targetDimension);
         buffer.writeString("transferPositionMode", transferPositionMode.name());
@@ -89,6 +93,15 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
 
     public void setFireResistanceSeconds(int fireResistanceSeconds) {
         this.fireResistanceSeconds = fireResistanceSeconds;
+    }
+
+    @Override
+    public int getSlowFallingSeconds() {
+        return slowFallingSeconds;
+    }
+
+    public void setSlowFallingSeconds(int slowFallingSeconds) {
+        this.slowFallingSeconds = slowFallingSeconds;
     }
 
     @Override

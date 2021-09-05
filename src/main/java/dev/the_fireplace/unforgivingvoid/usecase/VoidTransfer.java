@@ -80,6 +80,9 @@ public final class VoidTransfer {
         if (dimensionConfig.getFireResistanceSeconds() > 0) {
             serverPlayerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, dimensionConfig.getFireResistanceSeconds() * 20));
         }
+        if (dimensionConfig.getSlowFallingSeconds() > 0) {
+            serverPlayerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, dimensionConfig.getSlowFallingSeconds() * 20));
+        }
     }
 
     private void createAssistanceMaterials(DimensionConfig dimensionConfig, ServerWorld targetWorld, BlockPos spawnPos) {

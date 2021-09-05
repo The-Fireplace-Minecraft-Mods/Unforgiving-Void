@@ -29,6 +29,11 @@ public final class FallbackDimensionConfigDefaults implements DimensionSettings 
     }
 
     @Override
+    public int getSlowFallingSeconds() {
+        return 5;
+    }
+
+    @Override
     public int getHorizontalDistanceOffset() {
         return 128;
     }

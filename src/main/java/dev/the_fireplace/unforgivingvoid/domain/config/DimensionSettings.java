@@ -11,6 +11,8 @@ public interface DimensionSettings {
 
     int getFireResistanceSeconds();
 
+    int getSlowFallingSeconds();
+
     int getHorizontalDistanceOffset();
 
     String getTargetDimension();
