@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import the_fireplace.unforgivingvoid.config.DimensionConfig;
 import the_fireplace.unforgivingvoid.config.DimensionConfigManager;
-import the_fireplace.unforgivingvoid.usecase.VoidTransfer;
+import the_fireplace.unforgivingvoid.usecase.QueueVoidTransfer;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
@@ -22,7 +22,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         super(world, pos, yaw, profile);
     }
 
-    @Inject(at = @At(value="TAIL"), method = "playerTick")
+    @Inject(at = @At("TAIL"), method = "playerTick")
     private void tick(CallbackInfo callbackInfo) {
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(this.world.getRegistryKey().getValue());
         if (!this.world.isClient()
@@ -31,7 +31,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         ) {
             MinecraftServer server = getServer();
             if (server != null) {
-                DIContainer.get().getInstance(VoidTransfer.class).initiateVoidTransfer((ServerPlayerEntity) (Object) this, server);
+                DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
     }

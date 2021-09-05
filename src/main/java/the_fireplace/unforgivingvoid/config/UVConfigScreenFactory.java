@@ -81,7 +81,8 @@ public final class UVConfigScreenFactory {
             defaultSettings.getTriggerDistance(),
             dimensionConfig::setTriggerDistance,
             (byte) 1,
-            Byte.MAX_VALUE
+            Byte.MAX_VALUE,
+            (byte) 2
         );
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "dropObsidian",
@@ -95,7 +96,8 @@ public final class UVConfigScreenFactory {
             defaultSettings.getFireResistanceSeconds(),
             dimensionConfig::setFireResistanceSeconds,
             0,
-            Integer.MAX_VALUE
+            Integer.MAX_VALUE,
+            (byte) 2
         );
         configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "horizontalDistanceOffset",
@@ -115,14 +117,16 @@ public final class UVConfigScreenFactory {
             defaultSettings.getTargetDimension(),
             dimensionIds,
             dimensionConfig::setTargetDimension,
-            true
+            true,
+            (byte) 2
         );
         configScreenBuilder.addEnumDropdown(
             OPTION_TRANSLATION_BASE + "transferPositionMode",
             dimensionConfig.getTransferPositionMode(),
             defaultSettings.getTransferPositionMode(),
             Sets.newHashSet(TargetSpawnPositioning.values()),
-            dimensionConfig::setTransferPositionMode
+            dimensionConfig::setTransferPositionMode,
+            (byte) 0
         );
     }
 
@@ -144,15 +148,16 @@ public final class UVConfigScreenFactory {
                 }
             },
             false,
-            (byte) 2,
+            (byte) 3,
             value ->
                 dimensionConfigManager.isCustom(new Identifier(value))
-                    ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.err"))
+                    ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
                     : Optional.empty()
         );
     }
 
     private void buildCustomDimensionConfigCategory(Identifier identifier, DimensionConfig dimensionConfig) {
+        configScreenBuilder.startCategory(TRANSLATION_BASE + "custom", identifier.toString());
         addCommonDimensionConfigCategoryOptions(dimensionConfig, fallbackDimensionConfig);
         createRemoveCustomDimensionButton(identifier);
     }
