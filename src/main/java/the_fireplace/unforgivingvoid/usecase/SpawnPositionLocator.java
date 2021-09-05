@@ -35,9 +35,9 @@ public final class SpawnPositionLocator {
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
-            int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
+            int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
+            int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 20) + 10;
-            int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
@@ -59,8 +59,8 @@ public final class SpawnPositionLocator {
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
-            int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
-            int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
+            int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
+            int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = targetWorld.getTopY(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
@@ -75,8 +75,8 @@ public final class SpawnPositionLocator {
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.getRegistryKey(), targetWorld.getRegistryKey(), currentPos);
         int iteration = 0;
         do {
-            int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
-            int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
+            int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
+            int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = targetWorld.getDimensionHeight() - (int) Math.ceil(entityType.getHeight());
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
@@ -106,8 +106,8 @@ public final class SpawnPositionLocator {
                 return targetFocalPosition;
             }
 
-            int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
-            int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
+            int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
+            int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = targetWorld.getTopY(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
@@ -133,5 +133,9 @@ public final class SpawnPositionLocator {
         }
 
         return inputPos;
+    }
+
+    private int applyHorizontalOffset(Random rand, int xzCoordinate) {
+        return xzCoordinate - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
     }
 }
