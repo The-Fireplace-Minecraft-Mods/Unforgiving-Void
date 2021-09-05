@@ -117,6 +117,15 @@ public final class UVConfigScreenFactory {
             (byte) 2
         );
         configScreenBuilder.addIntField(
+            OPTION_TRANSLATION_BASE + "slowFallingSeconds",
+            dimensionConfig.getSlowFallingSeconds(),
+            defaultSettings.getSlowFallingSeconds(),
+            dimensionConfig::setSlowFallingSeconds,
+            0,
+            Integer.MAX_VALUE,
+            (byte) 2
+        );
+        configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "horizontalDistanceOffset",
             dimensionConfig.getHorizontalDistanceOffset(),
             defaultSettings.getHorizontalDistanceOffset(),
