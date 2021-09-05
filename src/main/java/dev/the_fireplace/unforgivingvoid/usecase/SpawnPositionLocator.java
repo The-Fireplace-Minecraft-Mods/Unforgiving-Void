@@ -41,7 +41,7 @@ public final class SpawnPositionLocator {
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
-        } while (!spawnVec.isPresent());
+        } while (spawnVec.isEmpty());
 
         return new BlockPos(spawnVec.get());
     }
@@ -65,7 +65,7 @@ public final class SpawnPositionLocator {
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
-        } while (!spawnVec.isPresent());
+        } while (spawnVec.isEmpty());
 
         return new BlockPos(spawnVec.get());
     }
@@ -97,7 +97,7 @@ public final class SpawnPositionLocator {
         BlockPos targetFocalPosition = targetWorld.getSpawnPos();
         Optional<Vec3d> spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition);
         int iteration = 0;
-        while (!spawnVec.isPresent()) {
+        while (spawnVec.isEmpty()) {
             if (iteration++ >= maxScanIterations) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding spawn position in {}, falling back to the built in spawn position even though it may be unsafe.",

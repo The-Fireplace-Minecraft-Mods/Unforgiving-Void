@@ -51,22 +51,12 @@ public final class VoidTransfer {
     }
 
     private BlockPos getSpawnPos(ServerPlayerEntity serverPlayerEntity, ServerWorld currentWorld, DimensionConfig dimensionConfig, ServerWorld targetWorld) {
-        BlockPos spawnPos;
-        switch (dimensionConfig.getTransferPositionMode()) {
-            case SIMILAR:
-                spawnPos = spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
-                break;
-            case SURFACE:
-                spawnPos = spawnPositionLocator.findSurfacePosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
-                break;
-            case FALL_FROM_SKY:
-                spawnPos = spawnPositionLocator.findSkyPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
-                break;
-            case SPAWNPOINT:
-            default:
-                spawnPos = spawnPositionLocator.findSpawnPosition(serverPlayerEntity.getType(), targetWorld);
-        }
-        return spawnPos;
+        return switch (dimensionConfig.getTransferPositionMode()) {
+            case SIMILAR -> spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
+            case SURFACE -> spawnPositionLocator.findSurfacePosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
+            case FALL_FROM_SKY -> spawnPositionLocator.findSkyPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
+            case SPAWNPOINT -> spawnPositionLocator.findSpawnPosition(serverPlayerEntity.getType(), targetWorld);
+        };
     }
 
     @Nullable
