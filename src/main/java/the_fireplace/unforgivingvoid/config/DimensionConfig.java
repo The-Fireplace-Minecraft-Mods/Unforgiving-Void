@@ -4,8 +4,9 @@ import dev.the_fireplace.annotateddi.api.DIContainer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageReadBuffer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageWriteBuffer;
 import dev.the_fireplace.lib.api.lazyio.interfaces.HierarchicalConfig;
+import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
-public class DimensionConfig implements HierarchicalConfig {
+public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
     protected boolean isEnabled;
     protected byte triggerDistance;
     protected boolean dropObsidian;
@@ -35,7 +36,7 @@ public class DimensionConfig implements HierarchicalConfig {
 
     @Override
     public void readFrom(StorageReadBuffer buffer) {
-        DimensionConfig defaultConfig = DIContainer.get().getInstance(DefaultDimensionConfig.class);
+        DimensionConfig defaultConfig = DIContainer.get().getInstance(FallbackDimensionConfig.class);
         isEnabled = buffer.readBool("isEnabled", defaultConfig.isEnabled());
         triggerDistance = buffer.readByte("triggerDistance", defaultConfig.getTriggerDistance());
         dropObsidian = buffer.readBool("dropObsidian", defaultConfig.isDropObsidian());
@@ -60,6 +61,7 @@ public class DimensionConfig implements HierarchicalConfig {
         buffer.writeBool("avoidSkySpawning", avoidSkySpawning);
     }
 
+    @Override
     public boolean isEnabled() {
         return isEnabled;
     }
@@ -68,6 +70,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.isEnabled = isEnabled;
     }
 
+    @Override
     public byte getTriggerDistance() {
         return triggerDistance;
     }
@@ -76,6 +79,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.triggerDistance = triggerDistance;
     }
 
+    @Override
     public boolean isDropObsidian() {
         return dropObsidian;
     }
@@ -84,6 +88,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.dropObsidian = dropObsidian;
     }
 
+    @Override
     public int getFireResistanceSeconds() {
         return fireResistanceSeconds;
     }
@@ -92,6 +97,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.fireResistanceSeconds = fireResistanceSeconds;
     }
 
+    @Override
     public int getHorizontalDistanceOffset() {
         return horizontalDistanceOffset;
     }
@@ -100,6 +106,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.horizontalDistanceOffset = horizontalDistanceOffset;
     }
 
+    @Override
     public String getTargetDimension() {
         return targetDimension;
     }
@@ -108,6 +115,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.targetDimension = targetDimension;
     }
 
+    @Override
     public short getApproximateSpawnY() {
         return approximateSpawnY;
     }
@@ -116,6 +124,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.approximateSpawnY = approximateSpawnY;
     }
 
+    @Override
     public boolean isAttemptFindSafePlatform() {
         return attemptFindSafePlatform;
     }
@@ -124,6 +133,7 @@ public class DimensionConfig implements HierarchicalConfig {
         this.attemptFindSafePlatform = attemptFindSafePlatform;
     }
 
+    @Override
     public boolean isAvoidSkySpawning() {
         return avoidSkySpawning;
     }

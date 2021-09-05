@@ -19,13 +19,13 @@ public final class DimensionConfigManager {
     public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(DimensionType.OVERWORLD_ID, DimensionType.THE_NETHER_ID, DimensionType.THE_END_ID);
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
-    private final DefaultDimensionConfig defaultSettings;
+    private final FallbackDimensionConfig defaultSettings;
 
     @Inject
     public DimensionConfigManager(
         HierarchicalConfigManagerFactory hierarchicalConfigManagerFactory,
         ConfigStateManager configStateManager,
-        DefaultDimensionConfig defaultSettings
+        FallbackDimensionConfig defaultSettings
     ) {
         this.defaultSettings = defaultSettings;
         this.configStateManager = configStateManager;

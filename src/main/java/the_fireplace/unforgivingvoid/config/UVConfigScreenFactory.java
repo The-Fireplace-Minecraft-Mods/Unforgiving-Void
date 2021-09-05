@@ -9,8 +9,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
 import the_fireplace.unforgivingvoid.UnforgivingVoid;
+import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Optional;
@@ -27,7 +29,8 @@ public final class UVConfigScreenFactory {
     private final ConfigScreenBuilderFactory configScreenBuilderFactory;
     private final DimensionConfigManager dimensionConfigManager;
 
-    private final DimensionConfig defaultDimensionConfig;
+    private final DimensionConfig fallbackDimensionConfig;
+    private final DimensionSettings defaultFallbackSettings;
 
     private ConfigScreenBuilder configScreenBuilder;
 
@@ -36,12 +39,14 @@ public final class UVConfigScreenFactory {
         TranslatorFactory translatorFactory,
         ConfigScreenBuilderFactory configScreenBuilderFactory,
         DimensionConfigManager dimensionConfigManager,
-        DefaultDimensionConfig defaultDimensionConfig
+        FallbackDimensionConfig fallbackDimensionConfig,
+        @Named("default") DimensionSettings defaultFallbackSettings
     ) {
         this.translator = translatorFactory.getTranslator(UnforgivingVoid.MODID);
         this.configScreenBuilderFactory = configScreenBuilderFactory;
         this.dimensionConfigManager = dimensionConfigManager;
-        this.defaultDimensionConfig = defaultDimensionConfig;
+        this.fallbackDimensionConfig = fallbackDimensionConfig;
+        this.defaultFallbackSettings = defaultFallbackSettings;
     }
 
     public Screen getConfigScreen(Screen parent) {
@@ -53,7 +58,7 @@ public final class UVConfigScreenFactory {
             dimensionConfigManager::saveAll
         );
 
-        buildDefaultDimensionConfigCategory(defaultDimensionConfig);
+        buildDefaultDimensionConfigCategory(fallbackDimensionConfig);
         for (Identifier customMobId : dimensionConfigManager.getDimensionIdsWithCustomSettings()) {
             buildCustomDimensionConfigCategory(customMobId, dimensionConfigManager.getSettings(customMobId));
         }
@@ -61,18 +66,18 @@ public final class UVConfigScreenFactory {
         return this.configScreenBuilder.build();
     }
 
-    private void addCommonDimensionConfigCategoryOptions(DimensionConfig dimensionConfig) {
+    private void addCommonDimensionConfigCategoryOptions(DimensionConfig dimensionConfig, DimensionSettings defaultSettings) {
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "isEnabled",
             dimensionConfig.isEnabled(),
-            defaultDimensionConfig.isEnabled(),
+            defaultSettings.isEnabled(),
             dimensionConfig::setEnabled,
             (byte) 0
         );
         configScreenBuilder.addByteField(
             OPTION_TRANSLATION_BASE + "triggerDistance",
             dimensionConfig.getTriggerDistance(),
-            defaultDimensionConfig.getTriggerDistance(),
+            defaultSettings.getTriggerDistance(),
             dimensionConfig::setTriggerDistance,
             (byte) 1,
             Byte.MAX_VALUE
@@ -80,13 +85,13 @@ public final class UVConfigScreenFactory {
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "dropObsidian",
             dimensionConfig.isDropObsidian(),
-            defaultDimensionConfig.isDropObsidian(),
+            defaultSettings.isDropObsidian(),
             dimensionConfig::setDropObsidian
         );
         configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "fireResistanceSeconds",
             dimensionConfig.getFireResistanceSeconds(),
-            defaultDimensionConfig.getFireResistanceSeconds(),
+            defaultSettings.getFireResistanceSeconds(),
             dimensionConfig::setFireResistanceSeconds,
             0,
             Integer.MAX_VALUE
@@ -94,7 +99,7 @@ public final class UVConfigScreenFactory {
         configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "horizontalDistanceOffset",
             dimensionConfig.getHorizontalDistanceOffset(),
-            defaultDimensionConfig.getHorizontalDistanceOffset(),
+            defaultSettings.getHorizontalDistanceOffset(),
             dimensionConfig::setHorizontalDistanceOffset,
             0,
             Integer.MAX_VALUE
@@ -106,7 +111,7 @@ public final class UVConfigScreenFactory {
         configScreenBuilder.addStringDropdown(
             OPTION_TRANSLATION_BASE + "targetDimension",
             dimensionConfig.getTargetDimension(),
-            defaultDimensionConfig.getTargetDimension(),
+            defaultSettings.getTargetDimension(),
             dimensionIds,
             dimensionConfig::setTargetDimension,
             true
@@ -114,25 +119,25 @@ public final class UVConfigScreenFactory {
         configScreenBuilder.addShortField(
             OPTION_TRANSLATION_BASE + "approximateSpawnY",
             dimensionConfig.getApproximateSpawnY(),
-            defaultDimensionConfig.getApproximateSpawnY(),
+            defaultSettings.getApproximateSpawnY(),
             dimensionConfig::setApproximateSpawnY
         );
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "attemptFindSafePlatform",
             dimensionConfig.isAttemptFindSafePlatform(),
-            defaultDimensionConfig.isAttemptFindSafePlatform(),
+            defaultSettings.isAttemptFindSafePlatform(),
             dimensionConfig::setAttemptFindSafePlatform
         );
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "avoidSkySpawning",
             dimensionConfig.isAvoidSkySpawning(),
-            defaultDimensionConfig.isAvoidSkySpawning(),
+            defaultSettings.isAvoidSkySpawning(),
             dimensionConfig::setAvoidSkySpawning
         );
     }
 
     private void buildDefaultDimensionConfigCategory(DimensionConfig dimensionConfig) {
-        addCommonDimensionConfigCategoryOptions(dimensionConfig);
+        addCommonDimensionConfigCategoryOptions(dimensionConfig, defaultFallbackSettings);
         createAddCustomDimensionDropdown();
     }
 
@@ -145,7 +150,7 @@ public final class UVConfigScreenFactory {
             dimensionConfigManager.getDimensionIdsWithoutCustomSettings().stream().map(Identifier::toString).sorted().collect(Collectors.toList()),
             newValue -> {
                 if (!newValue.isEmpty()) {
-                    dimensionConfigManager.addCustom(new Identifier(newValue), defaultDimensionConfig.clone());
+                    dimensionConfigManager.addCustom(new Identifier(newValue), fallbackDimensionConfig.clone());
                 }
             },
             false,
@@ -158,7 +163,7 @@ public final class UVConfigScreenFactory {
     }
 
     private void buildCustomDimensionConfigCategory(Identifier identifier, DimensionConfig dimensionConfig) {
-        addCommonDimensionConfigCategoryOptions(dimensionConfig);
+        addCommonDimensionConfigCategoryOptions(dimensionConfig, fallbackDimensionConfig);
         createRemoveCustomDimensionButton(identifier);
     }
 
