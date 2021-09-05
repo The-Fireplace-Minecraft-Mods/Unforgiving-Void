@@ -8,7 +8,7 @@ public final class SwitchDimensions {
 
     public void switchDimensions(ServerPlayerEntity serverPlayerEntity, ServerWorld targetWorld, BlockPos spawnPos) {
         preloadTargetChunk(targetWorld, spawnPos);
-        serverPlayerEntity.teleport(targetWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), serverPlayerEntity.yaw, serverPlayerEntity.pitch);
+        serverPlayerEntity.teleport(targetWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), serverPlayerEntity.getYaw(), serverPlayerEntity.getPitch());
     }
 
     private void preloadTargetChunk(ServerWorld targetWorld, BlockPos spawnPos) {

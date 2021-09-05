@@ -37,6 +37,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     }
 
     private int getBottomY(World world) {
-        return 0;
+        return world.getBottomY();
     }
 }

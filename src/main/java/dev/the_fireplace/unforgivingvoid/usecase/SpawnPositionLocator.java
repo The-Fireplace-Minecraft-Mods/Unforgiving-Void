@@ -37,7 +37,7 @@ public final class SpawnPositionLocator {
             }
             int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
             int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
-            int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 20) + 10;
+            int targetY = rand.nextInt(targetWorld.getLogicalHeight() - 20) + 10 + targetWorld.getBottomY();
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
@@ -77,7 +77,7 @@ public final class SpawnPositionLocator {
         do {
             int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
             int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
-            int targetY = targetWorld.getDimensionHeight() - (int) Math.ceil(entityType.getHeight());
+            int targetY = targetWorld.getLogicalHeight() - (int) Math.ceil(entityType.getHeight());
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             if (isSafeSky(entityType, targetWorld, attemptPos)) {

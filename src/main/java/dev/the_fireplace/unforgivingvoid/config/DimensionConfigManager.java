@@ -6,6 +6,7 @@ import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFac
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
 
 import javax.inject.Inject;
@@ -34,7 +35,7 @@ public final class DimensionConfigManager {
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            () -> UnforgivingVoidConstants.getServer().getRegistryManager().getDimensionTypes().getIds()
+            () -> UnforgivingVoidConstants.getServer().getRegistryManager().get(Registry.DIMENSION_TYPE_KEY).getIds()
         );
     }
 
