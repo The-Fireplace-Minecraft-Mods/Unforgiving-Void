@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 
 /**
- * Counteract Mod Menu's old caching mechanism (MM 1.16.9 and earlier), which shouldn't be used with Cloth Config GUIs and causes problems for how Mob Rebirth handles custom mob settings
+ * Counteract Mod Menu's old caching mechanism (MM 1.16.9 and earlier), which shouldn't be used with Cloth Config GUIs and causes problems for Hierarchical Configs
  * See also: https://github.com/TerraformersMC/ModMenu/issues/254
  */
 @Environment(EnvType.CLIENT)
