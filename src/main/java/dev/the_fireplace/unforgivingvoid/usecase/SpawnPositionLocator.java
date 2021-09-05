@@ -7,10 +7,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -21,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public final class SpawnPositionLocator {
 
@@ -188,7 +186,7 @@ public final class SpawnPositionLocator {
         if (protectAgainstHazardousSpawn && isHazardousSpawnPosition(entityType, world.getBlockState(blockPos))) {
             return null;
         }
-        double dismountHeight = world.getDismountHeight(getCollisionShape(world, blockPos), () -> getCollisionShape(world, blockPos.down()));
+        double dismountHeight = getDismountHeight(getCollisionShape(world, blockPos), () -> getCollisionShape(world, blockPos.down()));
         if (!canDismountInBlock(dismountHeight)) {
             return null;
         } else if (protectAgainstHazardousSpawn && dismountHeight <= 0.0D && isHazardousSpawnPosition(entityType, world.getBlockState(blockPos.down()))) {
@@ -199,6 +197,18 @@ public final class SpawnPositionLocator {
                 .allMatch(VoxelShape::isEmpty)
                 ? vec3d
                 : null;
+        }
+    }
+
+    /**
+     * Backport replacement for 1.16.5 method World.getDismountHeight
+     */
+    private double getDismountHeight(VoxelShape blockCollisionShape, Supplier<VoxelShape> belowBlockCollisionShapeGetter) {
+        if (!blockCollisionShape.isEmpty()) {
+            return blockCollisionShape.getMaximum(Direction.Axis.Y);
+        } else {
+            double dismountHeight = belowBlockCollisionShapeGetter.get().getMaximum(Direction.Axis.Y);
+            return dismountHeight >= 1.0D ? dismountHeight - 1.0D : Double.NEGATIVE_INFINITY;
         }
     }
 
