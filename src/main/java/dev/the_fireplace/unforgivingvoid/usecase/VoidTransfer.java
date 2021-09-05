@@ -34,8 +34,8 @@ public final class VoidTransfer {
     }
 
     public void initiateVoidTransfer(ServerPlayerEntity serverPlayerEntity, MinecraftServer server) {
-        ServerWorld world = serverPlayerEntity.getServerWorld();
-        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(world.getRegistryKey().getValue());
+        ServerWorld currentWorld = serverPlayerEntity.getServerWorld();
+        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.getRegistryKey().getValue());
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
         if (targetWorld == null) {
@@ -43,25 +43,30 @@ public final class VoidTransfer {
             return;
         }
         spawnPositionLocator.setHorizontalOffsetRange(dimensionConfig.getHorizontalDistanceOffset());
+        BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
+
+        applyStatusEffects(serverPlayerEntity, dimensionConfig);
+        switchDimensions.switchDimensions(serverPlayerEntity, targetWorld, spawnPos);
+        createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
+    }
+
+    private BlockPos getSpawnPos(ServerPlayerEntity serverPlayerEntity, ServerWorld currentWorld, DimensionConfig dimensionConfig, ServerWorld targetWorld) {
         BlockPos spawnPos;
         switch (dimensionConfig.getTransferPositionMode()) {
             case SIMILAR:
-                spawnPos = spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                spawnPos = spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
                 break;
             case SURFACE:
-                spawnPos = spawnPositionLocator.findSurfacePosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                spawnPos = spawnPositionLocator.findSurfacePosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
                 break;
             case FALL_FROM_SKY:
-                spawnPos = spawnPositionLocator.findSkyPosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                spawnPos = spawnPositionLocator.findSkyPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.getBlockPos());
                 break;
             case SPAWNPOINT:
             default:
                 spawnPos = spawnPositionLocator.findSpawnPosition(serverPlayerEntity.getType(), targetWorld);
         }
-
-        applyStatusEffects(serverPlayerEntity, dimensionConfig);
-        switchDimensions.switchDimensions(serverPlayerEntity, targetWorld, spawnPos);
-        createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
+        return spawnPos;
     }
 
     @Nullable
