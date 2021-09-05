@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
+import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 
 import java.util.Optional;
 import java.util.Random;
@@ -27,15 +28,19 @@ public final class SpawnPositionLocator {
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.getRegistryKey(), targetWorld.getRegistryKey(), currentPos);
         int iteration = 0;
         do {
+            if (iteration++ >= maxScanIterations) {
+                UnforgivingVoidConstants.getLogger().warn(
+                    "Max attempts exceeded for finding similar position in {}, falling back to finding the spawn position instead.",
+                    targetWorld.getRegistryKey().getValue().toString()
+                );
+                return findSpawnPosition(entityType, targetWorld);
+            }
             int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
             int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 20) + 10;
             int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
-            if (iteration++ >= maxScanIterations) {
-                return findSpawnPosition(entityType, targetWorld);
-            }
         } while (!spawnVec.isPresent());
 
         return new BlockPos(spawnVec.get());
@@ -48,6 +53,10 @@ public final class SpawnPositionLocator {
         int iteration = 0;
         do {
             if (iteration++ >= maxScanIterations) {
+                UnforgivingVoidConstants.getLogger().warn(
+                    "Max attempts exceeded for finding surface position in {}, falling back to finding the spawn position instead.",
+                    targetWorld.getRegistryKey().getValue().toString()
+                );
                 return findSpawnPosition(entityType, targetWorld);
             }
             int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
@@ -75,6 +84,10 @@ public final class SpawnPositionLocator {
                 return attemptPos;
             }
         } while (iteration++ < maxScanIterations);
+        UnforgivingVoidConstants.getLogger().warn(
+            "Max attempts exceeded for finding sky position in {}, falling back to finding the spawn position instead.",
+            targetWorld.getRegistryKey().getValue().toString()
+        );
 
         return findSpawnPosition(entityType, targetWorld);
     }
@@ -86,6 +99,10 @@ public final class SpawnPositionLocator {
         int iteration = 0;
         while (!spawnVec.isPresent()) {
             if (iteration++ >= maxScanIterations) {
+                UnforgivingVoidConstants.getLogger().warn(
+                    "Max attempts exceeded for finding spawn position in {}, falling back to the built in spawn position even though it may be unsafe.",
+                    targetWorld.getRegistryKey().getValue().toString()
+                );
                 return targetFocalPosition;
             }
 
