@@ -6,6 +6,7 @@ import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFac
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
 
 import javax.inject.Inject;
@@ -16,7 +17,11 @@ import java.util.Set;
 @Singleton
 public final class DimensionConfigManager {
     public static final String DOMAIN = UnforgivingVoidConstants.MODID + "_customDimensionConfigs";
-    public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(DimensionType.OVERWORLD_ID, DimensionType.THE_NETHER_ID, DimensionType.THE_END_ID);
+    public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(
+        Registry.DIMENSION_TYPE.getId(DimensionType.OVERWORLD),
+        Registry.DIMENSION_TYPE.getId(DimensionType.THE_NETHER),
+        Registry.DIMENSION_TYPE.getId(DimensionType.THE_END)
+    );
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
     private final FallbackDimensionConfig defaultSettings;
@@ -29,12 +34,11 @@ public final class DimensionConfigManager {
     ) {
         this.defaultSettings = defaultSettings;
         this.configStateManager = configStateManager;
-        //noinspection ConstantConditions
         this.hierarchicalConfigManager = hierarchicalConfigManagerFactory.createDynamicNamespaced(
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            () -> UnforgivingVoidConstants.getServer().getRegistryManager().getDimensionTypes().getIds()
+            Registry.DIMENSION_TYPE::getIds
         );
     }
 

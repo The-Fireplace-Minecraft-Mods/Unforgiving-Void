@@ -14,8 +14,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
@@ -35,7 +33,7 @@ public final class VoidTransfer {
 
     public void initiateVoidTransfer(ServerPlayerEntity serverPlayerEntity, MinecraftServer server) {
         ServerWorld currentWorld = serverPlayerEntity.getServerWorld();
-        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.getRegistryKey().getValue());
+        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(Registry.DIMENSION_TYPE.getId(currentWorld.getDimension().getType()));
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
         if (targetWorld == null) {
@@ -71,13 +69,7 @@ public final class VoidTransfer {
 
     @Nullable
     private ServerWorld getTargetWorld(MinecraftServer server, DimensionConfig dimensionConfig) {
-        RegistryKey<World> targetWorldRegistryKey = createTargetWorldRegistryKey(dimensionConfig);
-
-        return server.getWorld(targetWorldRegistryKey);
-    }
-
-    private RegistryKey<World> createTargetWorldRegistryKey(DimensionConfig dimensionConfig) {
-        return RegistryKey.of(Registry.WORLD_KEY, new Identifier(dimensionConfig.getTargetDimension()));
+        return server.getWorld(Registry.DIMENSION_TYPE.get(new Identifier(dimensionConfig.getTargetDimension())));
     }
 
     private void applyStatusEffects(ServerPlayerEntity serverPlayerEntity, DimensionConfig dimensionConfig) {

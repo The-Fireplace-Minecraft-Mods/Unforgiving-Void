@@ -31,8 +31,9 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
+	modApi("me.shedaniel.cloth:config-2:${project.clothconfig_version}") {
+		exclude(group: 'net.fabricmc.fabric-api')
+		exclude(group: 'io.github.prospector')
 	}
 	modCompileOnly "dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}:api"
 	modRuntime "dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}"
@@ -74,9 +75,6 @@ if (hasProperty('curseForgeApiKey')) {
 			changelog = file('changelog.txt')
 			releaseType = project.release_type
 			addGameVersion project.minecraft_version
-			addGameVersion '1.16.4'
-			addGameVersion '1.16.3'
-			addGameVersion '1.16.2'
 			addGameVersion 'Java 8'
 			addGameVersion 'Fabric'
 			mainArtifact(new File(new File(buildDir, "libs"), "$archivesBaseName-${version}.jar")) {
@@ -106,9 +104,6 @@ if (hasProperty('modrinthApiKey')) {
 		changelog = file('changelog.txt').getText()
 		releaseType = project.release_type
 		addGameVersion(project.minecraft_version as String)
-		addGameVersion('1.16.4')
-		addGameVersion('1.16.3')
-		addGameVersion('1.16.2')
 		addLoader('fabric')
 	}
 }

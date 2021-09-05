@@ -151,7 +151,7 @@ public final class UVConfigScreenFactory {
             (byte) 3,
             value ->
                 dimensionConfigManager.isCustom(new Identifier(value))
-                    ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
+                    ? Optional.of(translator.getTranslatedString(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
                     : Optional.empty()
         );
     }
