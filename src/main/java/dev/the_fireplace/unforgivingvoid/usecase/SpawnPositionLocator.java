@@ -7,14 +7,17 @@ import net.minecraft.block.AirBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.dimension.DimensionType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.Random;
@@ -156,11 +159,14 @@ public final class SpawnPositionLocator {
         return optional.isPresent() ? optional : findSafeNearbyPosition(entity, world, pos, false);
     }
 
-    private Optional<Vec3d> findSafeNearbyPosition(EntityType<?> entityType, ServerWorld world, BlockPos blockPos, boolean bl) {
+    /**
+     * Backported replacement for 1.16.5 method BlockRespawnAnchor.method_
+     */
+    private Optional<Vec3d> findSafeNearbyPosition(EntityType<?> entityType, ServerWorld world, BlockPos blockPos, boolean protectAgainstHazardousSpawn) {
         BlockPos.Mutable mutableTargetPos = new BlockPos.Mutable();
         UnmodifiableIterator<Vec3i> offsetIterator = spawnAreaOffsets.iterator();
 
-        Vec3d vec3d;
+        Vec3d safePosition;
         do {
             if (!offsetIterator.hasNext()) {
                 return Optional.empty();
@@ -168,20 +174,41 @@ public final class SpawnPositionLocator {
 
             Vec3i checkOffset = offsetIterator.next();
             mutableTargetPos.set(blockPos).add(checkOffset.getX(), checkOffset.getY(), checkOffset.getZ());
-            vec3d = Dismounting.method_30769(entityType, world, mutableTargetPos, bl);
-        } while (vec3d == null);
+            safePosition = checkPositionForSafety(entityType, world, mutableTargetPos, protectAgainstHazardousSpawn);
+        } while (safePosition == null);
 
-        return Optional.of(vec3d);
+        return Optional.of(safePosition);
+    }
+
+    /**
+     * Backported replacement for 1.16.5 method Dismounting.method_30769
+     */
+    @Nullable
+    private Vec3d checkPositionForSafety(EntityType<?> entityType, ServerWorld world, BlockPos blockPos, boolean protectAgainstHazardousSpawn) {
+        if (protectAgainstHazardousSpawn && isHazardousSpawnPosition(entityType, world.getBlockState(blockPos))) {
+            return null;
+        }
+        double d = world.getDismountHeight(getCollisionShape(world, blockPos), () -> {
+            return getCollisionShape(world, blockPos.down());
+        });
+        if (!canDismountInBlock(d)) {
+            return null;
+        } else if (protectAgainstHazardousSpawn && d <= 0.0D && isHazardousSpawnPosition(entityType, world.getBlockState(blockPos.down()))) {
+            return null;
+        } else {
+            Vec3d vec3d = Vec3d.ofCenter(blockPos, d);
+            return world.getBlockCollisions((Entity) null, entityType.getDimensions().getBoxAt(vec3d)).allMatch(VoxelShape::isEmpty) ? vec3d : null;
+        }
     }
 
     private boolean isSafeSky(EntityType<?> entityType, ServerWorld targetWorld, BlockPos blockPos) {
-        return !isInvalidSpawn(entityType, targetWorld.getBlockState(blockPos));
+        return !isHazardousSpawnPosition(entityType, targetWorld.getBlockState(blockPos));
     }
 
     /**
      * Backported replacement for 1.16.5 method EntityType#isInvalidSpawn
      */
-    private boolean isInvalidSpawn(EntityType<?> entityType, BlockState state) {
+    private boolean isHazardousSpawnPosition(EntityType<?> entityType, BlockState state) {
         //This first if statement isn't quite equivalent to the one from 1.16+ EntityType, but should be good enough for sky spawning purposes
         if (state.getBlock() instanceof AirBlock) {
             return false;
