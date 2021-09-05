@@ -4,7 +4,7 @@ import dev.the_fireplace.lib.api.io.interfaces.access.SimpleBuffer;
 import dev.the_fireplace.lib.api.io.interfaces.access.StorageReadBuffer;
 import dev.the_fireplace.lib.api.lazyio.injectables.ConfigStateManager;
 import dev.the_fireplace.lib.api.lazyio.interfaces.Config;
-import the_fireplace.unforgivingvoid.UnforgivingVoid;
+import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public final class FallbackDimensionConfig extends DimensionConfig implements Co
 
     @Override
     public String getId() {
-        return UnforgivingVoid.MODID + "_defaultDimensionConfig";
+        return UnforgivingVoidConstants.MODID + "_defaultDimensionConfig";
     }
 
     @Override

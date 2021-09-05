@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "di-main": [
-      "the_fireplace.unforgivingvoid.UnforgivingVoid"
+      "the_fireplace.unforgivingvoid.entrypoints.MainEntrypoint"
     ],
     "modmenu": [
       "the_fireplace.unforgivingvoid.entrypoints.ModMenuEntrypoint"

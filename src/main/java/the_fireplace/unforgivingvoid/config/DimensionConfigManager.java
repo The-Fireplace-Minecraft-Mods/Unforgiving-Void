@@ -6,7 +6,7 @@ import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFac
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.dimension.DimensionType;
-import the_fireplace.unforgivingvoid.UnforgivingVoid;
+import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Singleton
 public final class DimensionConfigManager {
-    public static final String DOMAIN = UnforgivingVoid.MODID + "_customDimensionConfigs";
+    public static final String DOMAIN = UnforgivingVoidConstants.MODID + "_customDimensionConfigs";
     public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(DimensionType.OVERWORLD_ID, DimensionType.THE_NETHER_ID, DimensionType.THE_END_ID);
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
@@ -34,7 +34,7 @@ public final class DimensionConfigManager {
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            () -> UnforgivingVoid.getServer().getRegistryManager().getDimensionTypes().getIds()
+            () -> UnforgivingVoidConstants.getServer().getRegistryManager().getDimensionTypes().getIds()
         );
     }
 

@@ -38,7 +38,7 @@ public final class VoidTransfer {
         RegistryKey<World> targetWorldRegistryKey = createTargetWorldRegistryKey(dimensionConfig);
         ServerWorld targetWorld = server.getWorld(targetWorldRegistryKey);
         if (targetWorld == null) {
-            UnforgivingVoid.getLogger().error("Target world not found: " + dimensionConfig.getTargetDimension());
+            UnforgivingVoidConstants.getLogger().error("Target world not found: " + dimensionConfig.getTargetDimension());
             return;
         }
         BlockPos playerPos = serverPlayerEntity.getBlockPos();

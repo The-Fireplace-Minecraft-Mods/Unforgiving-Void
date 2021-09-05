@@ -8,7 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
-import the_fireplace.unforgivingvoid.UnforgivingVoid;
+import the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Environment(EnvType.CLIENT)
 @Singleton
 public final class UVConfigScreenFactory {
-    private static final String TRANSLATION_BASE = "text.config." + UnforgivingVoid.MODID + ".";
+    private static final String TRANSLATION_BASE = "text.config." + UnforgivingVoidConstants.MODID + ".";
     private static final String OPTION_TRANSLATION_BASE = TRANSLATION_BASE + "option.";
 
     private final Translator translator;
@@ -42,7 +42,7 @@ public final class UVConfigScreenFactory {
         FallbackDimensionConfig fallbackDimensionConfig,
         @Named("default") DimensionSettings defaultFallbackSettings
     ) {
-        this.translator = translatorFactory.getTranslator(UnforgivingVoid.MODID);
+        this.translator = translatorFactory.getTranslator(UnforgivingVoidConstants.MODID);
         this.configScreenBuilderFactory = configScreenBuilderFactory;
         this.dimensionConfigManager = dimensionConfigManager;
         this.fallbackDimensionConfig = fallbackDimensionConfig;
