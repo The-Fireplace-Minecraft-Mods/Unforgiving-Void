@@ -33,7 +33,7 @@ public final class VoidTransfer {
 
     public void initiateVoidTransfer(ServerPlayerEntity serverPlayerEntity, MinecraftServer server) {
         ServerWorld currentWorld = serverPlayerEntity.getServerWorld();
-        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(Registry.DIMENSION_TYPE.getId(currentWorld.getDimension().getType()));
+        DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(Registry.DIMENSION.getId(currentWorld.getDimension().getType()));
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
         if (targetWorld == null) {
@@ -69,7 +69,7 @@ public final class VoidTransfer {
 
     @Nullable
     private ServerWorld getTargetWorld(MinecraftServer server, DimensionConfig dimensionConfig) {
-        return server.getWorld(Registry.DIMENSION_TYPE.get(new Identifier(dimensionConfig.getTargetDimension())));
+        return server.getWorld(Registry.DIMENSION.get(new Identifier(dimensionConfig.getTargetDimension())));
     }
 
     private void applyStatusEffects(ServerPlayerEntity serverPlayerEntity, DimensionConfig dimensionConfig) {

@@ -34,8 +34,8 @@ public final class SpawnPositionLocator {
     );
     private final ImmutableList<Vec3i> spawnAreaOffsets = new ImmutableList.Builder<Vec3i>()
         .addAll(xzOffsets)
-        .addAll(xzOffsets.stream().map(Vec3i::down).iterator())
-        .addAll(xzOffsets.stream().map(v3i -> v3i.down(-1)).iterator())
+        .addAll(xzOffsets.stream().map(v3i -> new Vec3i(v3i.getX(), v3i.getY() - 1, v3i.getZ())).iterator())
+        .addAll(xzOffsets.stream().map(v3i -> new Vec3i(v3i.getX(), v3i.getY() + 1, v3i.getZ())).iterator())
         .add(new Vec3i(0, 1, 0))
         .build();
 
@@ -59,7 +59,7 @@ public final class SpawnPositionLocator {
             if (iteration++ >= maxScanIterations) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding similar position in {}, falling back to finding the spawn position instead.",
-                    Registry.DIMENSION_TYPE.getId(targetWorld.getDimension().getType())
+                    Registry.DIMENSION.getId(targetWorld.getDimension().getType())
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
@@ -83,13 +83,13 @@ public final class SpawnPositionLocator {
             if (iteration++ >= maxScanIterations) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding surface position in {}, falling back to finding the spawn position instead.",
-                    Registry.DIMENSION_TYPE.getId(targetWorld.getDimension().getType())
+                    Registry.DIMENSION.getId(targetWorld.getDimension().getType())
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
             int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
             int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
-            int targetY = targetWorld.getTopY(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
+            int targetY = targetWorld.getTop(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
@@ -114,7 +114,7 @@ public final class SpawnPositionLocator {
         } while (iteration++ < maxScanIterations);
         UnforgivingVoidConstants.getLogger().warn(
             "Max attempts exceeded for finding sky position in {}, falling back to finding the spawn position instead.",
-            Registry.DIMENSION_TYPE.getId(targetWorld.getDimension().getType())
+            Registry.DIMENSION.getId(targetWorld.getDimension().getType())
         );
 
         return findSpawnPosition(entityType, targetWorld);
@@ -129,14 +129,14 @@ public final class SpawnPositionLocator {
             if (iteration++ >= maxScanIterations) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding spawn position in {}, falling back to the built in spawn position even though it may be unsafe.",
-                    Registry.DIMENSION_TYPE.getId(targetWorld.getDimension().getType())
+                    Registry.DIMENSION.getId(targetWorld.getDimension().getType())
                 );
                 return targetFocalPosition;
             }
 
             int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
             int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
-            int targetY = targetWorld.getTopY(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
+            int targetY = targetWorld.getTop(Heightmap.Type.WORLD_SURFACE, targetX, targetZ);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
@@ -193,7 +193,7 @@ public final class SpawnPositionLocator {
             return null;
         } else {
             Vec3d vec3d = getCenteredSpawnVector(blockPos, dismountHeight);
-            return world.getBlockCollisions(null, getCollisionBoxForPosition(entityType.getDimensions(), vec3d.getX(), vec3d.getY(), vec3d.getZ()))
+            return world.method_20812(null, getCollisionBoxForPosition(entityType.getDimensions(), vec3d.getX(), vec3d.getY(), vec3d.getZ()))
                 .allMatch(VoxelShape::isEmpty)
                 ? vec3d
                 : null;

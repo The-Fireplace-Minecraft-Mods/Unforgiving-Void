@@ -22,9 +22,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         super(world, profile);
     }
 
-    @Inject(at = @At("TAIL"), method = "playerTick")
+    @Inject(at = @At("TAIL"), method = "tick")
     private void tick(CallbackInfo callbackInfo) {
-        DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(Registry.DIMENSION_TYPE.getId(world.getDimension().getType()));
+        DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(Registry.DIMENSION.getId(world.getDimension().getType()));
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
             && this.getBlockPos().getY() <= getBottomY(world) - dimensionConfig.getTriggerDistance()

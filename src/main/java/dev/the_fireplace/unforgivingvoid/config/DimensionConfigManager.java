@@ -18,9 +18,9 @@ import java.util.Set;
 public final class DimensionConfigManager {
     public static final String DOMAIN = UnforgivingVoidConstants.MODID + "_customDimensionConfigs";
     public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(
-        Registry.DIMENSION_TYPE.getId(DimensionType.OVERWORLD),
-        Registry.DIMENSION_TYPE.getId(DimensionType.THE_NETHER),
-        Registry.DIMENSION_TYPE.getId(DimensionType.THE_END)
+        Registry.DIMENSION.getId(DimensionType.OVERWORLD),
+        Registry.DIMENSION.getId(DimensionType.THE_NETHER),
+        Registry.DIMENSION.getId(DimensionType.THE_END)
     );
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
@@ -38,7 +38,7 @@ public final class DimensionConfigManager {
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            Registry.DIMENSION_TYPE::getIds
+            Registry.DIMENSION::getIds
         );
     }
 
