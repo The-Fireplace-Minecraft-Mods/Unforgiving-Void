@@ -15,7 +15,7 @@ import java.util.Random;
 public final class SpawnPositionLocator {
 
     private int horizontalOffsetRange = 128;
-    private int maxScanIterations = 512;
+    private int maxScanIterations = 2048;
 
     public void setHorizontalOffsetRange(int horizontalOffsetRange) {
         this.horizontalOffsetRange = horizontalOffsetRange;
@@ -28,7 +28,7 @@ public final class SpawnPositionLocator {
         int iteration = 0;
         do {
             int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
-            int targetY = targetFocalPosition.getY() - 64 + rand.nextInt(128);//TODO smarter scan for this one, bound with dimension bounds
+            int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 2) + 1;
             int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
