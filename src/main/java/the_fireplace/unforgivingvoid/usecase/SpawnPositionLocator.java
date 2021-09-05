@@ -28,7 +28,7 @@ public final class SpawnPositionLocator {
         int iteration = 0;
         do {
             int targetX = targetFocalPosition.getX() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
-            int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 2) + 1;
+            int targetY = rand.nextInt(targetWorld.getDimensionHeight() - 20) + 10;
             int targetZ = targetFocalPosition.getZ() - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
