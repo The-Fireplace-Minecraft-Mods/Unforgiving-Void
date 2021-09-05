@@ -10,6 +10,7 @@ import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.Locale;
 
 @Singleton
 public final class FallbackDimensionConfig extends DimensionConfig implements Config {
@@ -40,8 +41,6 @@ public final class FallbackDimensionConfig extends DimensionConfig implements Co
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", defaultSettings.getFireResistanceSeconds());
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", defaultSettings.getHorizontalDistanceOffset());
         targetDimension = buffer.readString("targetDimension", defaultSettings.getTargetDimension());
-        approximateSpawnY = buffer.readShort("approximateSpawnY", defaultSettings.getApproximateSpawnY());
-        attemptFindSafePlatform = buffer.readBool("attemptFindSafePlatform", defaultSettings.isAttemptFindSafePlatform());
-        avoidSkySpawning = buffer.readBool("avoidSkySpawning", defaultSettings.isAvoidSkySpawning());
+        transferPositionMode = TargetSpawnPositioning.valueOf(buffer.readString("transferPositionMode", defaultSettings.getTransferPositionMode().name()).toUpperCase(Locale.ROOT));
     }
 }

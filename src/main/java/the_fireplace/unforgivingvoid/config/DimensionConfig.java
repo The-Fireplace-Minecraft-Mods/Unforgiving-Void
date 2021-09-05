@@ -6,6 +6,8 @@ import dev.the_fireplace.lib.api.io.interfaces.access.StorageWriteBuffer;
 import dev.the_fireplace.lib.api.lazyio.interfaces.HierarchicalConfig;
 import the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
+import java.util.Locale;
+
 public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
     protected boolean isEnabled;
     protected byte triggerDistance;
@@ -13,9 +15,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
     protected int fireResistanceSeconds;
     protected int horizontalDistanceOffset;
     protected String targetDimension;
-    protected short approximateSpawnY;
-    protected boolean attemptFindSafePlatform;
-    protected boolean avoidSkySpawning;
+    protected TargetSpawnPositioning transferPositionMode;
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
@@ -27,9 +27,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         clone.fireResistanceSeconds = fireResistanceSeconds;
         clone.horizontalDistanceOffset = horizontalDistanceOffset;
         clone.targetDimension = targetDimension;
-        clone.approximateSpawnY = approximateSpawnY;
-        clone.attemptFindSafePlatform = attemptFindSafePlatform;
-        clone.avoidSkySpawning = avoidSkySpawning;
+        clone.transferPositionMode = transferPositionMode;
 
         return clone;
     }
@@ -43,9 +41,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         fireResistanceSeconds = buffer.readInt("fireResistanceSeconds", defaultConfig.getFireResistanceSeconds());
         horizontalDistanceOffset = buffer.readInt("horizontalDistanceOffset", defaultConfig.getHorizontalDistanceOffset());
         targetDimension = buffer.readString("targetDimension", defaultConfig.getTargetDimension());
-        approximateSpawnY = buffer.readShort("approximateSpawnY", defaultConfig.getApproximateSpawnY());
-        attemptFindSafePlatform = buffer.readBool("attemptFindSafePlatform", defaultConfig.isAttemptFindSafePlatform());
-        avoidSkySpawning = buffer.readBool("avoidSkySpawning", defaultConfig.isAvoidSkySpawning());
+        transferPositionMode = TargetSpawnPositioning.valueOf(buffer.readString("transferPositionMode", defaultConfig.getTransferPositionMode().name()).toUpperCase(Locale.ROOT));
     }
 
     @Override
@@ -56,9 +52,7 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
         buffer.writeInt("fireResistanceSeconds", fireResistanceSeconds);
         buffer.writeInt("horizontalDistanceOffset", horizontalDistanceOffset);
         buffer.writeString("targetDimension", targetDimension);
-        buffer.writeShort("approximateSpawnY", approximateSpawnY);
-        buffer.writeBool("attemptFindSafePlatform", attemptFindSafePlatform);
-        buffer.writeBool("avoidSkySpawning", avoidSkySpawning);
+        buffer.writeString("transferPositionMode", transferPositionMode.name());
     }
 
     @Override
@@ -116,29 +110,11 @@ public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
     }
 
     @Override
-    public short getApproximateSpawnY() {
-        return approximateSpawnY;
+    public TargetSpawnPositioning getTransferPositionMode() {
+        return transferPositionMode;
     }
 
-    public void setApproximateSpawnY(short approximateSpawnY) {
-        this.approximateSpawnY = approximateSpawnY;
-    }
-
-    @Override
-    public boolean isAttemptFindSafePlatform() {
-        return attemptFindSafePlatform;
-    }
-
-    public void setAttemptFindSafePlatform(boolean attemptFindSafePlatform) {
-        this.attemptFindSafePlatform = attemptFindSafePlatform;
-    }
-
-    @Override
-    public boolean isAvoidSkySpawning() {
-        return avoidSkySpawning;
-    }
-
-    public void setAvoidSkySpawning(boolean avoidSkySpawning) {
-        this.avoidSkySpawning = avoidSkySpawning;
+    public void setTransferPositionMode(TargetSpawnPositioning transferPositionMode) {
+        this.transferPositionMode = transferPositionMode;
     }
 }

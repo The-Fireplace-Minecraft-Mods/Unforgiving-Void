@@ -39,17 +39,7 @@ public final class FallbackDimensionConfigDefaults implements DimensionSettings 
     }
 
     @Override
-    public short getApproximateSpawnY() {
-        return 128;
-    }
-
-    @Override
-    public boolean isAttemptFindSafePlatform() {
-        return true;
-    }
-
-    @Override
-    public boolean isAvoidSkySpawning() {
-        return true;
+    public TargetSpawnPositioning getTransferPositionMode() {
+        return TargetSpawnPositioning.SIMILAR;
     }
 }

@@ -1,5 +1,6 @@
 package the_fireplace.unforgivingvoid.config;
 
+import com.google.common.collect.Sets;
 import dev.the_fireplace.lib.api.chat.injectables.TranslatorFactory;
 import dev.the_fireplace.lib.api.chat.interfaces.Translator;
 import dev.the_fireplace.lib.api.client.injectables.ConfigScreenBuilderFactory;
@@ -116,23 +117,12 @@ public final class UVConfigScreenFactory {
             dimensionConfig::setTargetDimension,
             true
         );
-        configScreenBuilder.addShortField(
-            OPTION_TRANSLATION_BASE + "approximateSpawnY",
-            dimensionConfig.getApproximateSpawnY(),
-            defaultSettings.getApproximateSpawnY(),
-            dimensionConfig::setApproximateSpawnY
-        );
-        configScreenBuilder.addBoolToggle(
-            OPTION_TRANSLATION_BASE + "attemptFindSafePlatform",
-            dimensionConfig.isAttemptFindSafePlatform(),
-            defaultSettings.isAttemptFindSafePlatform(),
-            dimensionConfig::setAttemptFindSafePlatform
-        );
-        configScreenBuilder.addBoolToggle(
-            OPTION_TRANSLATION_BASE + "avoidSkySpawning",
-            dimensionConfig.isAvoidSkySpawning(),
-            defaultSettings.isAvoidSkySpawning(),
-            dimensionConfig::setAvoidSkySpawning
+        configScreenBuilder.addEnumDropdown(
+            OPTION_TRANSLATION_BASE + "transferPositionMode",
+            dimensionConfig.getTransferPositionMode(),
+            defaultSettings.getTransferPositionMode(),
+            Sets.newHashSet(TargetSpawnPositioning.values()),
+            dimensionConfig::setTransferPositionMode
         );
     }
 

@@ -1,5 +1,7 @@
 package the_fireplace.unforgivingvoid.domain.config;
 
+import the_fireplace.unforgivingvoid.config.TargetSpawnPositioning;
+
 public interface DimensionSettings {
     boolean isEnabled();
 
@@ -13,9 +15,5 @@ public interface DimensionSettings {
 
     String getTargetDimension();
 
-    short getApproximateSpawnY();
-
-    boolean isAttemptFindSafePlatform();
-
-    boolean isAvoidSkySpawning();
+    TargetSpawnPositioning getTransferPositionMode();
 }

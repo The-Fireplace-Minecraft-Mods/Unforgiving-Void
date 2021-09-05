@@ -43,9 +43,21 @@ public final class VoidTransfer {
             return;
         }
         spawnPositionLocator.setHorizontalOffsetRange(dimensionConfig.getHorizontalDistanceOffset());
-        spawnPositionLocator.setAvoidSkySpawning(dimensionConfig.isAvoidSkySpawning());
-        spawnPositionLocator.setPreferredYCoordinate(dimensionConfig.getApproximateSpawnY());
-        BlockPos spawnPos = spawnPositionLocator.findSpawnPosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+        BlockPos spawnPos;
+        switch (dimensionConfig.getTransferPositionMode()) {
+            case SIMILAR:
+                spawnPos = spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                break;
+            case SURFACE:
+                spawnPos = spawnPositionLocator.findSurfacePosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                break;
+            case FALL_FROM_SKY:
+                spawnPos = spawnPositionLocator.findSkyPosition(serverPlayerEntity.getType(), world, targetWorld, serverPlayerEntity.getBlockPos());
+                break;
+            case SPAWNPOINT:
+            default:
+                spawnPos = spawnPositionLocator.findSpawnPosition(serverPlayerEntity.getType(), targetWorld);
+        }
 
         applyStatusEffects(serverPlayerEntity, dimensionConfig);
         switchDimensions.switchDimensions(serverPlayerEntity, targetWorld, spawnPos);
