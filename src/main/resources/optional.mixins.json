@@ -1,0 +1,11 @@
+{
+  "required": false,
+  "package": "dev.the_fireplace.unforgivingvoid.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "clothconfig.AbstractConfigScreenAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

@@ -24,7 +24,8 @@
     ]
   },
   "mixins": [
-    "unforgivingvoid.mixins.json"
+    "unforgivingvoid.mixins.json",
+    "optional.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",
