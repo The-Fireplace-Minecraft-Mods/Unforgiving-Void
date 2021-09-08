@@ -1,5 +1,6 @@
 package dev.the_fireplace.unforgivingvoid.usecase;
 
+import dev.the_fireplace.lib.api.teleport.injectables.Teleporter;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
@@ -21,13 +22,13 @@ import javax.inject.Inject;
 public final class VoidTransfer {
 
     private final DimensionConfigManager dimensionConfigManager;
-    private final SwitchDimensions switchDimensions;
+    private final Teleporter teleporter;
     private final SpawnPositionLocator spawnPositionLocator;
 
     @Inject
-    public VoidTransfer(DimensionConfigManager dimensionConfigManager, SwitchDimensions switchDimensions, SpawnPositionLocator spawnPositionLocator) {
+    public VoidTransfer(DimensionConfigManager dimensionConfigManager, Teleporter teleporter, SpawnPositionLocator spawnPositionLocator) {
         this.dimensionConfigManager = dimensionConfigManager;
-        this.switchDimensions = switchDimensions;
+        this.teleporter = teleporter;
         this.spawnPositionLocator = spawnPositionLocator;
     }
 
@@ -44,7 +45,7 @@ public final class VoidTransfer {
         BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
 
         applyStatusEffects(serverPlayerEntity, dimensionConfig);
-        switchDimensions.switchDimensions(serverPlayerEntity, targetWorld, spawnPos);
+        teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
     }
 
