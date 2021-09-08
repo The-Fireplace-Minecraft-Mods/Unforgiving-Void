@@ -6,15 +6,9 @@ import dev.the_fireplace.lib.api.chat.interfaces.Translator;
 import dev.the_fireplace.lib.api.client.injectables.ConfigScreenBuilderFactory;
 import dev.the_fireplace.lib.api.client.interfaces.ConfigScreenBuilder;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import dev.the_fireplace.unforgivingvoid.compat.modmenu.ModMenuCompat;
-import dev.the_fireplace.unforgivingvoid.compat.modmenu.OldModMenuCompat;
 import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.api.VersionParsingException;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
 
@@ -62,18 +56,7 @@ public final class UVConfigScreenFactory {
             TRANSLATION_BASE + "title",
             TRANSLATION_BASE + "default",
             parent,
-            () -> {
-                dimensionConfigManager.saveAll();
-                Optional<ModContainer> modmenu = FabricLoader.getInstance().getModContainer("modmenu");
-                try {
-                    if (modmenu.isPresent() && SemanticVersion.parse(modmenu.get().getMetadata().getVersion().getFriendlyString()).compareTo(SemanticVersion.parse("1.16.9")) < 1) {
-                        ModMenuCompat compat = new OldModMenuCompat();
-                        compat.forceReloadConfigGui();
-                    }
-                } catch (VersionParsingException e) {
-                    UnforgivingVoidConstants.getLogger().error("Unable to parse mod menu version", e);
-                }
-            }
+            dimensionConfigManager::saveAll
         );
 
         buildDefaultDimensionConfigCategory(fallbackDimensionConfig);
