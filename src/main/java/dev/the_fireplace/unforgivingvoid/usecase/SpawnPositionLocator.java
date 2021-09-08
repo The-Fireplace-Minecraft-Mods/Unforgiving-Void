@@ -1,7 +1,7 @@
 package dev.the_fireplace.unforgivingvoid.usecase;
 
+import dev.the_fireplace.lib.api.teleport.injectables.SafePosition;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -10,13 +10,20 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 
+import javax.inject.Inject;
 import java.util.Optional;
 import java.util.Random;
 
 public final class SpawnPositionLocator {
 
+    private final SafePosition safePosition;
     private int horizontalOffsetRange = 128;
     private int maxScanIterations = 2048;
+
+    @Inject
+    public SpawnPositionLocator(SafePosition safePosition) {
+        this.safePosition = safePosition;
+    }
 
     public void setHorizontalOffsetRange(int horizontalOffsetRange) {
         this.horizontalOffsetRange = horizontalOffsetRange;
@@ -118,11 +125,11 @@ public final class SpawnPositionLocator {
     }
 
     private Optional<Vec3d> findSafePlatform(EntityType<?> entityType, ServerWorld targetWorld, BlockPos blockPos) {
-        return RespawnAnchorBlock.findRespawnPosition(entityType, targetWorld, blockPos);
+        return safePosition.findBy(entityType, targetWorld, blockPos);
     }
 
     private boolean isSafeSky(EntityType<?> entityType, ServerWorld targetWorld, BlockPos blockPos) {
-        return !entityType.isInvalidSpawn(targetWorld.getBlockState(blockPos));
+        return safePosition.canSpawnInside(entityType, targetWorld.getBlockState(blockPos));
     }
 
     private BlockPos getDimensionScaledPosition(RegistryKey<World> originDimension, RegistryKey<World> targetDimension, BlockPos inputPos) {
