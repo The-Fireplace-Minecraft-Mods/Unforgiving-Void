@@ -99,7 +99,7 @@ if (hasProperty('modrinthApiKey')) {
 		projectId = '00000000'
 		versionNumber = version
 		versionName = project.mod_version
-		uploadFile = new File(new File(buildDir, "libs"), "$archivesBaseName-${version}.jar")
+		uploadFile = new File(new File(buildDir, 'libs'), "$archivesBaseName-${version}.jar")
 		changelog = file('changelog.txt').getText()
 		releaseType = project.release_type
 		addGameVersion(project.minecraft_version as String)
