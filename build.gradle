@@ -34,19 +34,20 @@ dependencies {
 	modRuntime "dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}"
 	annotationProcessor "dev.the-fireplace:Annotated-DI:${project.annotateddi_version}:processor"
 
-	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property 'version', project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+	filesMatching('fabric.mod.json') {
+		expand 'version': project.version
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
+	it.options.encoding = 'UTF-8'
+	it.options.release.set(8)
 }
 
 java {
@@ -57,7 +58,7 @@ java {
 javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 
 jar {
-	from("LICENSE") {
+	from('LICENSE') {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 }
@@ -75,7 +76,7 @@ if (hasProperty('curseForgeApiKey')) {
 			addGameVersion '1.16.2'
 			addGameVersion 'Java 8'
 			addGameVersion 'Fabric'
-			mainArtifact(new File(new File(buildDir, "libs"), "$archivesBaseName-${version}.jar")) {
+			mainArtifact(new File(new File(buildDir, 'libs'), "$archivesBaseName-${version}.jar")) {
 				displayName = "$archivesBaseName-$version"
 				relations {
 					requiredDependency 'fireplace-lib'
