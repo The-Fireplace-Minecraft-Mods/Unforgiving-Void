@@ -1,6 +1,5 @@
 package dev.the_fireplace.unforgivingvoid.config;
 
-import com.google.common.collect.Sets;
 import dev.the_fireplace.lib.api.chat.injectables.TranslatorFactory;
 import dev.the_fireplace.lib.api.chat.interfaces.Translator;
 import dev.the_fireplace.lib.api.client.injectables.ConfigScreenBuilderFactory;
@@ -72,18 +71,14 @@ public final class UVConfigScreenFactory {
             OPTION_TRANSLATION_BASE + "isEnabled",
             dimensionConfig.isEnabled(),
             defaultSettings.isEnabled(),
-            dimensionConfig::setEnabled,
-            (byte) 0
-        );
+            dimensionConfig::setEnabled
+        ).setDescriptionRowCount((byte) 0);
         configScreenBuilder.addByteField(
             OPTION_TRANSLATION_BASE + "triggerDistance",
             dimensionConfig.getTriggerDistance(),
             defaultSettings.getTriggerDistance(),
-            dimensionConfig::setTriggerDistance,
-            (byte) 1,
-            Byte.MAX_VALUE,
-            (byte) 2
-        );
+            dimensionConfig::setTriggerDistance
+        ).setMinimum((byte) 1).setDescriptionRowCount((byte) 2);
         configScreenBuilder.addBoolToggle(
             OPTION_TRANSLATION_BASE + "dropObsidian",
             dimensionConfig.isDropObsidian(),
@@ -94,49 +89,43 @@ public final class UVConfigScreenFactory {
             OPTION_TRANSLATION_BASE + "fireResistanceSeconds",
             dimensionConfig.getFireResistanceSeconds(),
             defaultSettings.getFireResistanceSeconds(),
-            dimensionConfig::setFireResistanceSeconds,
-            0,
-            Integer.MAX_VALUE,
-            (byte) 2
-        );
+            dimensionConfig::setFireResistanceSeconds
+        ).setMinimum(0).setDescriptionRowCount((byte) 2);
         configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "slowFallingSeconds",
             dimensionConfig.getSlowFallingSeconds(),
             defaultSettings.getSlowFallingSeconds(),
-            dimensionConfig::setSlowFallingSeconds,
-            0,
-            Integer.MAX_VALUE,
-            (byte) 2
-        );
+            dimensionConfig::setSlowFallingSeconds
+        ).setMinimum(0).setDescriptionRowCount((byte) 2);
         configScreenBuilder.addIntField(
             OPTION_TRANSLATION_BASE + "horizontalDistanceOffset",
             dimensionConfig.getHorizontalDistanceOffset(),
             defaultSettings.getHorizontalDistanceOffset(),
-            dimensionConfig::setHorizontalDistanceOffset,
-            0,
-            Integer.MAX_VALUE
-        );
-        Set<String> dimensionIds = new HashSet<>();
-        for (Identifier dimensionId : dimensionConfigManager.getDimensionIds()) {
-            dimensionIds.add(dimensionId.toString());
-        }
+            dimensionConfig::setHorizontalDistanceOffset
+        ).setMinimum(0);
+        Set<String> dimensionIds = getDimensionIds();
         configScreenBuilder.addStringDropdown(
             OPTION_TRANSLATION_BASE + "targetDimension",
             dimensionConfig.getTargetDimension(),
             defaultSettings.getTargetDimension(),
             dimensionIds,
-            dimensionConfig::setTargetDimension,
-            true,
-            (byte) 2
-        );
+            dimensionConfig::setTargetDimension
+        ).setDescriptionRowCount((byte) 2);
         configScreenBuilder.addEnumDropdown(
             OPTION_TRANSLATION_BASE + "transferPositionMode",
             dimensionConfig.getTransferPositionMode(),
             defaultSettings.getTransferPositionMode(),
-            Sets.newHashSet(TargetSpawnPositioning.values()),
-            dimensionConfig::setTransferPositionMode,
-            (byte) 0
-        );
+            TargetSpawnPositioning.values(),
+            dimensionConfig::setTransferPositionMode
+        ).setDescriptionRowCount((byte) 0);
+    }
+
+    private Set<String> getDimensionIds() {
+        Set<String> dimensionIds = new HashSet<>();
+        for (Identifier dimensionId : dimensionConfigManager.getDimensionIds()) {
+            dimensionIds.add(dimensionId.toString());
+        }
+        return dimensionIds;
     }
 
     private void buildDefaultDimensionConfigCategory(DimensionConfig dimensionConfig) {
@@ -155,13 +144,11 @@ public final class UVConfigScreenFactory {
                 if (!newValue.isEmpty()) {
                     dimensionConfigManager.addCustom(new Identifier(newValue), fallbackDimensionConfig.clone());
                 }
-            },
-            false,
-            (byte) 3,
-            value ->
-                dimensionConfigManager.isCustom(new Identifier(value))
-                    ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
-                    : Optional.empty()
+            }
+        ).setDescriptionRowCount((byte) 3).setErrorSupplier(value ->
+            dimensionConfigManager.isCustom(new Identifier(value))
+                ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
+                : Optional.empty()
         );
     }
 
@@ -181,8 +168,7 @@ public final class UVConfigScreenFactory {
                 if (newValue) {
                     dimensionConfigManager.deleteCustom(identifier);
                 }
-            },
-            (byte) 2
-        );
+            }
+        ).setDescriptionRowCount((byte) 2);
     }
 }
