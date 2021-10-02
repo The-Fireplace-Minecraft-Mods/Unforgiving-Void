@@ -31,9 +31,6 @@
     "minecraft": ">=1.17",
     "fireplacelib": ">=6.0.3 <7"
   },
-  "suggests": {
-    "modmenu": ">=2.0.3"
-  },
   "custom": {
     "modmenu": {
       "links": {
