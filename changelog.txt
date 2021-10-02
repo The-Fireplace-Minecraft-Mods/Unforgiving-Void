@@ -1,14 +1,6 @@
 Additions:
-Added the ability to individually configure each dimension's void
-Added the ability to choose target dimension: You can now configure it to go overworld to nether, nether to end, etc.
-Added more ways to spawn after falling in to the void:
-- Appear at a safe, nearby position in the target world (Previous behavior, default)
-- Fall from the sky in a similar position
-- Appear on the surface at a similar position
-- Appear at the world's spawnpoint
-Added slow falling after teleport - can also be configured.
 
 Changes:
+Updated to use Fireplace Lib 6
 
 Fixes/Internal Changes:
-Fixed the teleport getting spammed when it has difficulty finding a good spawn position or otherwise takes more than a tick to happen
