@@ -29,7 +29,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "minecraft": "1.16.X",
-    "fireplacelib": ">=6.0.2 <7"
+    "fireplacelib": ">=6.0.3 <7"
   },
   "suggests": {
     "modmenu": ">=1.16.10"
