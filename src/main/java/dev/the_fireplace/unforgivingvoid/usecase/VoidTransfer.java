@@ -35,7 +35,7 @@ public final class VoidTransfer {
     }
 
     public void initiateVoidTransfer(ServerPlayerEntity serverPlayerEntity, MinecraftServer server) {
-        ServerWorld currentWorld = serverPlayerEntity.getServerWorld();
+        ServerWorld currentWorld = serverPlayerEntity.getWorld();
         DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.getRegistryKey().getValue());
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
