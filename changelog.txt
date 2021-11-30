@@ -1,6 +1,1 @@
-Additions:
-
-Changes:
-Updated to use Fireplace Lib 6
-
-Fixes/Internal Changes:
+Updated to use Fabric Loader 0.12 and Fireplace Lib 6.2
