@@ -13,7 +13,8 @@ import javax.inject.Singleton;
 import java.util.Locale;
 
 @Singleton
-public final class FallbackDimensionConfig extends DimensionConfig implements Config {
+public final class FallbackDimensionConfig extends DimensionConfig implements Config
+{
 
     private final DimensionSettings defaultSettings;
 

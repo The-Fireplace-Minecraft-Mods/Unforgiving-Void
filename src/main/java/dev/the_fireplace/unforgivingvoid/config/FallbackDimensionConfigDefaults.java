@@ -7,7 +7,8 @@ import javax.inject.Singleton;
 
 @Implementation(name = "default")
 @Singleton
-public final class FallbackDimensionConfigDefaults implements DimensionSettings {
+public final class FallbackDimensionConfigDefaults implements DimensionSettings
+{
     @Override
     public boolean isEnabled() {
         return true;

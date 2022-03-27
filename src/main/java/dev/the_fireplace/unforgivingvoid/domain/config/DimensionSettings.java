@@ -2,7 +2,8 @@ package dev.the_fireplace.unforgivingvoid.domain.config;
 
 import dev.the_fireplace.unforgivingvoid.config.TargetSpawnPositioning;
 
-public interface DimensionSettings {
+public interface DimensionSettings
+{
     boolean isEnabled();
 
     byte getTriggerDistance();

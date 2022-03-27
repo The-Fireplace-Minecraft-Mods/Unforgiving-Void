@@ -7,7 +7,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import javax.inject.Inject;
 import java.util.Set;
 
-public final class QueueVoidTransfer {
+public final class QueueVoidTransfer
+{
 
     private static final Set<ServerPlayerEntity> playerLock = new ConcurrentSet<>();
 

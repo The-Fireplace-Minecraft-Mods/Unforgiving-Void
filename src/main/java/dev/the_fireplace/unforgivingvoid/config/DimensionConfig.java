@@ -8,7 +8,8 @@ import dev.the_fireplace.unforgivingvoid.domain.config.DimensionSettings;
 
 import java.util.Locale;
 
-public class DimensionConfig implements HierarchicalConfig, DimensionSettings {
+public class DimensionConfig implements HierarchicalConfig, DimensionSettings
+{
     protected boolean isEnabled;
     protected byte triggerDistance;
     protected boolean dropObsidian;
