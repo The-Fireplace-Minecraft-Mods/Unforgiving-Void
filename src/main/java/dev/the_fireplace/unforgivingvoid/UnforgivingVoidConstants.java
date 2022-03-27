@@ -6,7 +6,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 
-public final class UnforgivingVoidConstants {
+public final class UnforgivingVoidConstants
+{
     public static final String MODID = "unforgivingvoid";
     private static final Logger LOGGER = LogManager.getLogger(MODID);
     @Nullable

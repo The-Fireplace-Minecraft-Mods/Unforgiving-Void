@@ -14,7 +14,8 @@ import javax.inject.Inject;
 import java.util.Optional;
 import java.util.Random;
 
-public final class SpawnPositionLocator {
+public final class SpawnPositionLocator
+{
 
     private final SafePosition safePosition;
     private int horizontalOffsetRange = 128;
