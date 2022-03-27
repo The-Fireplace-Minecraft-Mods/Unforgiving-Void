@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 @Singleton
-public final class UVConfigScreenFactory {
+public final class UVConfigScreenFactory
+{
     private static final String TRANSLATION_BASE = "text.config." + UnforgivingVoidConstants.MODID + ".";
     private static final String OPTION_TRANSLATION_BASE = TRANSLATION_BASE + "option.";
 

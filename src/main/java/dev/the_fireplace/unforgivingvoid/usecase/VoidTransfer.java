@@ -21,7 +21,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 
-public final class VoidTransfer {
+public final class VoidTransfer
+{
 
     private final DimensionConfigManager dimensionConfigManager;
     private final Teleporter teleporter;
