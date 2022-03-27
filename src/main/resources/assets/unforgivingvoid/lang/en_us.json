@@ -1,4 +1,5 @@
 {
+  "modmenu.descriptionTranslation.unforgivingvoid": "${description}",
   "text.config.unforgivingvoid.title": "Unforgiving Void Config",
   "text.config.unforgivingvoid.default": "Default Void",
   "text.config.unforgivingvoid.custom": "%s Void",

@@ -2,15 +2,16 @@
   "schemaVersion": 1,
   "id": "unforgivingvoid",
   "version": "${version}",
-  "name": "Unforgiving Void",
-  "description": "Fall into the Void and end up in another dimension!",
+  "name": "${name}",
+  "description": "${description}",
   "authors": [
     "The_Fireplace"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/unforgiving-void",
-    "sources": "https://github.com/The-Fireplace-Minecraft-Mods/Unforgiving-Void",
-    "issues": "https://github.com/The-Fireplace-Minecraft-Mods/Unforgiving-Void/issues"
+    "homepage": "${curseforge_url}",
+    "sources": "${github_url}",
+    "issues": "${github_url}/issues",
+    "modrinth": "${modrinth_url}"
   },
   "license": "MPL-2.0",
   "icon": "assets/unforgivingvoid/icon.png",
