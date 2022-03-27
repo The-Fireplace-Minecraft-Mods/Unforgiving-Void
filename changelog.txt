@@ -1,1 +1,1 @@
-Updated to use Fabric Loader 0.12 and Fireplace Lib 6.2
+Updated to use Fireplace Lib 6.3
