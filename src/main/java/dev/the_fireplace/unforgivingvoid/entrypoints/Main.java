@@ -9,7 +9,8 @@ import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 
-public final class MainEntrypoint implements DIModInitializer {
+public final class Main implements DIModInitializer
+{
 
     private ReloadableManager reloadableManager;
 
