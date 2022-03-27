@@ -15,7 +15,8 @@ import java.util.Collection;
 import java.util.Set;
 
 @Singleton
-public final class DimensionConfigManager {
+public final class DimensionConfigManager
+{
     public static final String DOMAIN = UnforgivingVoidConstants.MODID + "_customDimensionConfigs";
     public static final Set<Identifier> DEFAULT_DIMENSIONS = Sets.newHashSet(
         Registry.DIMENSION_TYPE.getId(DimensionType.OVERWORLD),
