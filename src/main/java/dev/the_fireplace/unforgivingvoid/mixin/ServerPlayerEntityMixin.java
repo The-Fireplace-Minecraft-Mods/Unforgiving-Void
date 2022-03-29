@@ -24,6 +24,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
     @Shadow
     public abstract ServerWorld getWorld();
 
+    @Shadow
+    public abstract boolean isInTeleportationState();
+
     public ServerPlayerEntityMixin(World world, GameProfile profile) {
         super(world, profile);
     }
@@ -34,6 +37,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
             && this.getBlockPos().getY() <= getBottomY(world) - dimensionConfig.getTriggerDistance()
+            && !isInTeleportationState()
         ) {
             MinecraftServer server = getServer();
             if (server != null) {
