@@ -16,10 +16,10 @@ import java.util.Random;
 
 public final class SpawnPositionLocator
 {
+    private static final int MAX_SCAN_ITERATIONS = 2048;
 
     private final SafePosition safePosition;
     private int horizontalOffsetRange = 128;
-    private int maxScanIterations = 2048;
 
     @Inject
     public SpawnPositionLocator(SafePosition safePosition) {
@@ -36,7 +36,9 @@ public final class SpawnPositionLocator
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.getRegistryKey(), targetWorld.getRegistryKey(), currentPos);
         int iteration = 0;
         do {
-            if (iteration++ >= maxScanIterations) {
+            UnforgivingVoidConstants.getLogger().debug("Attempting to teleport to similar position, iteration {}", iteration);
+
+            if (iteration++ >= MAX_SCAN_ITERATIONS) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding similar position in {}, falling back to finding the spawn position instead.",
                     targetWorld.getRegistryKey().getValue().toString()
@@ -60,7 +62,9 @@ public final class SpawnPositionLocator
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.getRegistryKey(), targetWorld.getRegistryKey(), currentPos);
         int iteration = 0;
         do {
-            if (iteration++ >= maxScanIterations) {
+            UnforgivingVoidConstants.getLogger().debug("Attempting to teleport to surface position, iteration {}", iteration);
+
+            if (iteration++ >= MAX_SCAN_ITERATIONS) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding surface position in {}, falling back to finding the spawn position instead.",
                     targetWorld.getRegistryKey().getValue().toString()
@@ -83,6 +87,8 @@ public final class SpawnPositionLocator
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.getRegistryKey(), targetWorld.getRegistryKey(), currentPos);
         int iteration = 0;
         do {
+            UnforgivingVoidConstants.getLogger().debug("Attempting to teleport to sky position, iteration {}", iteration);
+
             int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
             int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = targetWorld.getDimensionHeight() - (int) Math.ceil(entityType.getHeight());
@@ -91,7 +97,7 @@ public final class SpawnPositionLocator
             if (isSafeSky(entityType, targetWorld, attemptPos)) {
                 return attemptPos;
             }
-        } while (iteration++ < maxScanIterations);
+        } while (iteration++ < MAX_SCAN_ITERATIONS);
         UnforgivingVoidConstants.getLogger().warn(
             "Max attempts exceeded for finding sky position in {}, falling back to finding the spawn position instead.",
             targetWorld.getRegistryKey().getValue().toString()
@@ -106,7 +112,9 @@ public final class SpawnPositionLocator
         Optional<Vec3d> spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition);
         int iteration = 0;
         while (!spawnVec.isPresent()) {
-            if (iteration++ >= maxScanIterations) {
+            UnforgivingVoidConstants.getLogger().debug("Attempting to teleport to spawn position, iteration {}", iteration);
+
+            if (iteration++ >= MAX_SCAN_ITERATIONS) {
                 UnforgivingVoidConstants.getLogger().warn(
                     "Max attempts exceeded for finding spawn position in {}, falling back to the built in spawn position even though it may be unsafe.",
                     targetWorld.getRegistryKey().getValue().toString()
