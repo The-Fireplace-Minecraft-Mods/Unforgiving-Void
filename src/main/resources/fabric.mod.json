@@ -20,8 +20,8 @@
     "di-main": [
       "dev.the_fireplace.unforgivingvoid.entrypoints.Main"
     ],
-    "fireplacelib": [
-      "dev.the_fireplace.unforgivingvoid.entrypoints.ConfigGui"
+    "modmenu": [
+      "dev.the_fireplace.unforgivingvoid.entrypoints.ModMenu"
     ]
   },
   "mixins": [

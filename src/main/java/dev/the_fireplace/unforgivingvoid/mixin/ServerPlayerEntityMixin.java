@@ -42,8 +42,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
             if (server != null) {
                 UnforgivingVoidConstants.getLogger().debug(
                     "Player is below the minimum height. Teleporting to new dimension. Current position is {}, and current world is {}",
-                    getBlockPos().toShortString(),
-                    Optional.ofNullable(Registry.DIMENSION_TYPE.getId(this.dimension)).orElse(new Identifier("null")).toString()
+                    getBlockPos().toString(),
+                    Optional.ofNullable(Registry.DIMENSION.getId(this.dimension)).orElse(new Identifier("null")).toString()
                 );
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }

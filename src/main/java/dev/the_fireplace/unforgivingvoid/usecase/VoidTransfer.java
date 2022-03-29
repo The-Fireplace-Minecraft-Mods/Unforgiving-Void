@@ -52,8 +52,8 @@ public final class VoidTransfer
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
-            teleportedEntity.getBlockPos().toShortString(),
-            Optional.ofNullable(Registry.DIMENSION_TYPE.getId(teleportedEntity.dimension)).orElse(new Identifier("null")).toString()
+            teleportedEntity.getBlockPos().toString(),
+            Optional.ofNullable(Registry.DIMENSION.getId(teleportedEntity.dimension)).orElse(new Identifier("null")).toString()
         );
     }
 
