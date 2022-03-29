@@ -19,6 +19,7 @@ import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 public final class VoidTransfer
 {
@@ -52,7 +53,7 @@ public final class VoidTransfer
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
             teleportedEntity.getBlockPos().toShortString(),
-            teleportedEntity.getEntityWorld().getRegistryKey().getValue()
+            Optional.ofNullable(Registry.DIMENSION_TYPE.getId(teleportedEntity.dimension)).orElse(new Identifier("null")).toString()
         );
     }
 
