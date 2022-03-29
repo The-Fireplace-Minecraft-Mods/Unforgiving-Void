@@ -30,7 +30,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         super(world, profile);
     }
 
-    @Inject(at = @At("TAIL"), method = "tick")
+    @Inject(at = @At("TAIL"), method = "method_14226")
     private void tick(CallbackInfo callbackInfo) {
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(Registry.DIMENSION.getId(world.getDimension().getType()));
         if (!this.world.isClient()
