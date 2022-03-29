@@ -1,3 +1,2 @@
-Updated to use Fireplace Lib 6.3
-Made Mod Menu description translatable
-Added Notify support
+Add debug logging to help identify issues with teleporting
+Optimize player lock to help prevent concurrent teleportation
