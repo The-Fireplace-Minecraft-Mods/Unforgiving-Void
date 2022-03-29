@@ -5,6 +5,7 @@ import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -46,8 +47,13 @@ public final class VoidTransfer
         BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
 
         applyStatusEffects(serverPlayerEntity, dimensionConfig);
-        teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos);
+        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
+        UnforgivingVoidConstants.getLogger().debug(
+            "Player teleport complete. New position is {}, and new world is {}",
+            teleportedEntity.getBlockPos().toShortString(),
+            teleportedEntity.getWorld().getRegistryKey().getValue()
+        );
     }
 
     private BlockPos getSpawnPos(ServerPlayerEntity serverPlayerEntity, ServerWorld currentWorld, DimensionConfig dimensionConfig, ServerWorld targetWorld) {
