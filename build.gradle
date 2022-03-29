@@ -30,8 +30,12 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompileOnly "dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}:api"
-	modRuntimeOnly "dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}"
+	modCompileOnly("dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}:api") {
+		exclude(group: 'net.fabricmc.fabric-api')
+	}
+	modRuntimeOnly("dev.the-fireplace:Fireplace-Lib:${project.fireplacelib_version}") {
+		exclude(group: 'net.fabricmc.fabric-api')
+	}
 	annotationProcessor "dev.the-fireplace:Annotated-DI:${project.annotateddi_version}:processor"
 
 	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
@@ -71,6 +75,7 @@ if (hasProperty('curseForgeApiKey')) {
 			changelog = file('changelog.txt')
 			releaseType = project.release_type
 			addGameVersion project.minecraft_version
+			addGameVersion '1.18'
 			addGameVersion 'Java 17'
 			addGameVersion 'Fabric'
 			mainArtifact(new File(new File(buildDir, 'libs'), "$archivesBaseName-${version}.jar")) {
@@ -100,6 +105,7 @@ if (hasProperty('modrinthApiKey')) {
 		changelog = file('changelog.txt').getText()
 		releaseType = project.release_type
 		addGameVersion(project.minecraft_version as String)
+		addGameVersion('1.18')
 		addLoader('fabric')
 	}
 }
