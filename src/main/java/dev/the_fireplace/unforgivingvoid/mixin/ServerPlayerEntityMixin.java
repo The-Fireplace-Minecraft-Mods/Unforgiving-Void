@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerPlayerEntityMixin extends PlayerEntity
 {
     @Shadow
-    public abstract ServerWorld getWorld();
+    public abstract ServerWorld getServerWorld();
 
     @Shadow
     public abstract boolean isInTeleportationState();
@@ -44,7 +44,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                 UnforgivingVoidConstants.getLogger().debug(
                     "Player is below the minimum height. Teleporting to new dimension. Current position is {}, and current world is {}",
                     getBlockPos().toShortString(),
-                    getWorld().getRegistryKey().getValue()
+                    getServerWorld().getRegistryKey().getValue()
                 );
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
