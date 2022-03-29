@@ -1,2 +1,2 @@
 Add debug logging to help identify issues with teleporting
-Optimize player lock to help prevent concurrent teleportation
+Improved the teleport handling to help prevent rubber band teleporting at high ping
