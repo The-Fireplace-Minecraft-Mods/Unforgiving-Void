@@ -52,7 +52,7 @@ public final class VoidTransfer
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
             teleportedEntity.getBlockPos().toShortString(),
-            teleportedEntity.getWorld().getRegistryKey().getValue()
+            teleportedEntity.getEntityWorld().getRegistryKey().getValue()
         );
     }
 
