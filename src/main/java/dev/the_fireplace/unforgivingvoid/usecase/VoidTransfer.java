@@ -52,7 +52,7 @@ public final class VoidTransfer
 
         Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
 
-        applyStatusEffects(serverPlayerEntity, dimensionConfig);
+        applyStatusEffects((ServerPlayerEntity) teleportedEntity, dimensionConfig);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
