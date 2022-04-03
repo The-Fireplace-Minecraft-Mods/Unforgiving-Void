@@ -28,9 +28,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
     @Shadow
     private boolean inTeleportationState;
 
-    @Shadow
-    protected abstract void worldChanged(ServerWorld origin);
-
     protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
