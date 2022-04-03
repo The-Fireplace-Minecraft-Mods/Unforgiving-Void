@@ -37,7 +37,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(this.world.getRegistryKey().getValue());
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
-            && this.getBlockPos().getY() <= world.getBottomY() - dimensionConfig.getTriggerDistance()
+            && this.getBlockPos().getY() <= -dimensionConfig.getTriggerDistance()
             && !isInTeleportationState()
         ) {
             MinecraftServer server = getServer();
