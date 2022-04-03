@@ -28,6 +28,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
     @Shadow
     private boolean inTeleportationState;
 
+    @Shadow
+    protected abstract void worldChanged(ServerWorld origin);
+
     protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
@@ -37,7 +40,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(this.world.getRegistryKey().getValue());
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
-            && this.getBlockPos().getY() <= world.getBottomY() - dimensionConfig.getTriggerDistance()
+            && this.getBlockPos().getY() <= getBottomY(world) - dimensionConfig.getTriggerDistance()
             && !isInTeleportationState()
         ) {
             MinecraftServer server = getServer();
@@ -53,6 +56,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
+    }
+
+    private int getBottomY(World world) {
+        return world.getBottomY();
     }
 
     @Shadow
