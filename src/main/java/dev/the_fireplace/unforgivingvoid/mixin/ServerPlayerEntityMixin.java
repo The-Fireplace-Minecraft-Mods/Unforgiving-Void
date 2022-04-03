@@ -1,5 +1,6 @@
 package dev.the_fireplace.unforgivingvoid.mixin;
 
+
 import com.mojang.authlib.GameProfile;
 import dev.the_fireplace.annotateddi.api.DIContainer;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
@@ -18,14 +19,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+
+@SuppressWarnings("AbstractClassNeverImplemented")
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity
 {
-    @Shadow
-    public abstract ServerWorld getServerWorld();
 
     @Shadow
-    public abstract boolean isInTeleportationState();
+    private boolean inTeleportationState;
 
     protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -36,7 +37,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(this.world.getRegistryKey().getValue());
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
-            && this.getBlockPos().getY() <= getBottomY(world) - dimensionConfig.getTriggerDistance()
+            && this.getBlockPos().getY() <= world.getBottomY() - dimensionConfig.getTriggerDistance()
             && !isInTeleportationState()
         ) {
             MinecraftServer server = getServer();
@@ -46,12 +47,17 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                     getBlockPos().toShortString(),
                     getServerWorld().getRegistryKey().getValue()
                 );
+
+                inTeleportationState = true;
+
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
     }
 
-    private int getBottomY(World world) {
-        return 0;
-    }
+    @Shadow
+    public abstract ServerWorld getServerWorld();
+
+    @Shadow
+    public abstract boolean isInTeleportationState();
 }
