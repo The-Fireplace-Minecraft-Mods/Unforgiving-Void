@@ -39,7 +39,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         DimensionConfig dimensionConfig = DIContainer.get().getInstance(DimensionConfigManager.class).getSettings(Registry.DIMENSION_TYPE.getId(world.getDimension().getType()));
         if (!this.world.isClient()
             && dimensionConfig.isEnabled()
-            && this.getBlockPos().getY() <= -dimensionConfig.getTriggerDistance()
+            && this.getBlockPos().getY() <= getBottomY(world) - dimensionConfig.getTriggerDistance()
             && !isInTeleportationState()
         ) {
             MinecraftServer server = getServer();
@@ -55,6 +55,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
+    }
+
+    private int getBottomY(World world) {
+        return 0;
     }
 
     @Shadow

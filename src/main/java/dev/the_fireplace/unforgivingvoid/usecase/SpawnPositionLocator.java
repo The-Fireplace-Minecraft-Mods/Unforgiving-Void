@@ -47,12 +47,9 @@ public final class SpawnPositionLocator
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
-            int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
-            int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
             int targetY = rand.nextInt(targetWorld.getEffectiveHeight() - 20) + 10;
-            BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
-            spawnVec = findSafePlatform(entityType, targetWorld, attemptPos);
+            spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition, targetY);
         } while (!spawnVec.isPresent());
 
         return new BlockPos(spawnVec.get());
@@ -127,6 +124,18 @@ public final class SpawnPositionLocator
 
         return new BlockPos(spawnVec.get());
     }
+
+    private Optional<Vec3d> findSafePlatform(EntityType<?> entityType, ServerWorld targetWorld, BlockPos targetFocalPosition, int targetY) {
+        Random rand = targetWorld.getRandom();
+
+        int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
+        int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
+
+        BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
+
+        return safePosition.findBy(entityType, targetWorld, attemptPos);
+    }
+
 
     private Optional<Vec3d> findSafePlatform(EntityType<?> entityType, ServerWorld targetWorld, BlockPos targetFocalPosition) {
         Random rand = targetWorld.getRandom();
