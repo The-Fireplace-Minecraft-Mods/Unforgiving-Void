@@ -1,5 +1,5 @@
 name: build against linux and create snapshot
-on: [ pull_request, push ]
+on: [ push ]
 
 jobs:
   build:
