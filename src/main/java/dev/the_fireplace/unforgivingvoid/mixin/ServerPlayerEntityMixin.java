@@ -54,6 +54,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
         }
     }
 
+    private int getBottomY(World world) {
+        return world.getBottomY();
+    }
+
     @Invoker("getWorld")
     public abstract ServerWorld getServerWorld();
 
