@@ -1,5 +1,6 @@
 package dev.the_fireplace.unforgivingvoid.usecase;
 
+
 import dev.the_fireplace.lib.api.teleport.injectables.Teleporter;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
@@ -22,11 +23,14 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 
+
 public final class VoidTransfer
 {
 
     private final DimensionConfigManager dimensionConfigManager;
+
     private final Teleporter teleporter;
+
     private final SpawnPositionLocator spawnPositionLocator;
 
     @Inject
@@ -41,15 +45,18 @@ public final class VoidTransfer
         DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.getRegistryKey().getValue());
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
+
         if (targetWorld == null) {
             UnforgivingVoidConstants.getLogger().error("Target world not found: " + dimensionConfig.getTargetDimension());
             return;
         }
+
         spawnPositionLocator.setHorizontalOffsetRange(dimensionConfig.getHorizontalDistanceOffset());
         BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
 
-        applyStatusEffects(serverPlayerEntity, dimensionConfig);
-        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos);
+        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+
+        applyStatusEffects((ServerPlayerEntity) teleportedEntity, dimensionConfig);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
