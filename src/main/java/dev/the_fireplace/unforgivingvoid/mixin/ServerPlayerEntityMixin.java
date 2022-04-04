@@ -1,5 +1,6 @@
 package dev.the_fireplace.unforgivingvoid.mixin;
 
+
 import com.mojang.authlib.GameProfile;
 import dev.the_fireplace.annotateddi.api.DIContainer;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
@@ -20,11 +21,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 
+
+@SuppressWarnings("AbstractClassNeverImplemented")
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity
 {
+
     @Shadow
-    public abstract boolean isInTeleportationState();
+    private boolean inTeleportationState;
 
     public ServerPlayerEntityMixin(World world, GameProfile profile) {
         super(world, profile);
@@ -45,6 +49,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                     getBlockPos().toShortString(),
                     Optional.ofNullable(Registry.DIMENSION_TYPE.getId(this.dimension)).orElse(new Identifier("null")).toString()
                 );
+
+                inTeleportationState = true;
+
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
@@ -53,4 +60,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
     private int getBottomY(World world) {
         return 0;
     }
+
+    @Shadow
+    public abstract boolean isInTeleportationState();
 }
