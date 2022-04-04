@@ -14,18 +14,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@SuppressWarnings("AbstractClassNeverImplemented")
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity
 {
-    @Shadow
-    public abstract ServerWorld getWorld();
 
     @Shadow
-    public abstract boolean isInTeleportationState();
+    private boolean inTeleportationState;
 
     protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -44,8 +44,11 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
                 UnforgivingVoidConstants.getLogger().debug(
                     "Player is below the minimum height. Teleporting to new dimension. Current position is {}, and current world is {}",
                     getBlockPos().toShortString(),
-                    getWorld().getRegistryKey().getValue()
+                    getServerWorld().getRegistryKey().getValue()
                 );
+
+                inTeleportationState = true;
+
                 DIContainer.get().getInstance(QueueVoidTransfer.class).queueTransfer((ServerPlayerEntity) (Object) this, server);
             }
         }
@@ -54,4 +57,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity
     private int getBottomY(World world) {
         return world.getBottomY();
     }
+
+    @Invoker("getWorld")
+    public abstract ServerWorld getServerWorld();
+
+    @Shadow
+    public abstract boolean isInTeleportationState();
 }
