@@ -41,15 +41,18 @@ public final class VoidTransfer
         DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.getRegistryKey().getValue());
 
         ServerWorld targetWorld = getTargetWorld(server, dimensionConfig);
+
         if (targetWorld == null) {
             UnforgivingVoidConstants.getLogger().error("Target world not found: " + dimensionConfig.getTargetDimension());
             return;
         }
+
         spawnPositionLocator.setHorizontalOffsetRange(dimensionConfig.getHorizontalDistanceOffset());
         BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
 
-        applyStatusEffects(serverPlayerEntity, dimensionConfig);
-        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos);
+        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+
+        applyStatusEffects((ServerPlayerEntity) teleportedEntity, dimensionConfig);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
