@@ -1,2 +1,1 @@
-Add debug logging to help identify issues with teleporting
-Improved the teleport handling to help prevent rubber band teleporting at high ping
+Further improved the teleport handling to help prevent rubber band teleporting at high ping (solonovamax)
