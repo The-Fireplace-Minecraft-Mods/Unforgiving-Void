@@ -26,6 +26,10 @@ subprojects {
 
     javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 
+    nexusStaging {
+        packageGroup = project.maven_group
+    }
+
     jar {
         manifest {
             attributes([
