@@ -102,7 +102,7 @@ if (hasProperty('curseForgeApiKey')) {
     curseforge {
         apiKey = curseForgeApiKey
         project {
-            id = '000000'
+            id = '274863'
             changelog = changelogFile
             releaseType = project.release_type
             addGameVersion project.minecraft_version
@@ -110,6 +110,7 @@ if (hasProperty('curseForgeApiKey')) {
             addGameVersion '1.18'
             addGameVersion 'Java 17'
             addGameVersion 'Fabric'
+            addGameVersion 'Quilt'
             mainArtifact(mainArtifactFile) {
                 displayName = "$archivesBaseName-$version"
                 relations {
@@ -132,7 +133,7 @@ import com.modrinth.minotaur.TaskModrinthUpload
 if (hasProperty('modrinthApiKey')) {
     task publishModrinth(type: TaskModrinthUpload) {
         token = modrinthApiKey
-        projectId = '00000000'
+        projectId = 'LYliJ0jT'
         versionNumber = version
         versionName = project.mod_version
         uploadFile = mainArtifactFile
@@ -142,6 +143,7 @@ if (hasProperty('modrinthApiKey')) {
         addGameVersion('1.18.1')
         addGameVersion('1.18')
         addLoader('fabric')
+        addLoader('quilt')
     }
 }
 
