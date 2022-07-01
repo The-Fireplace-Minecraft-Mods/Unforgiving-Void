@@ -3,7 +3,7 @@ plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
     // Mod Hosting Publish
     id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'com.modrinth.minotaur' version '1.1.0'
+    id 'com.modrinth.minotaur' version '2.2.0'
 }
 
 archivesBaseName = "${archives_base_name}-Fabric"
@@ -128,22 +128,23 @@ if (hasProperty('curseForgeApiKey')) {
     }
 }
 
-import com.modrinth.minotaur.TaskModrinthUpload
-
 if (hasProperty('modrinthApiKey')) {
-    task publishModrinth(type: TaskModrinthUpload) {
+    modrinth {
         token = modrinthApiKey
         projectId = 'LYliJ0jT'
         versionNumber = version
         versionName = project.mod_version
         uploadFile = mainArtifactFile
         changelog = changelogFile.getText()
-        releaseType = project.release_type
-        addGameVersion(project.minecraft_version as String)
-        addGameVersion('1.18.1')
-        addGameVersion('1.18')
-        addLoader('fabric')
-        addLoader('quilt')
+        versionType = project.release_type
+        gameVersions = [project.minecraft_version as String]
+        loaders = ['fabric', 'quilt']
+        dependencies {
+            required.project 'P7dR8mSH'// Fabric API
+            required.project 'RAXqYPH1'// Annotated DI
+            required.project 'ING0LAPF'// Fireplace Lib
+            optional.project 'mOgUt4GM'// Mod Menu
+        }
     }
 }
 
