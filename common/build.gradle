@@ -18,6 +18,11 @@ dependencies {
     compileOnly "dev.the-fireplace:Fireplace-Lib-Common:${project.fireplacelib_version}"
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 if (hasProperty('nexusUsername') || System.getenv("NEXUS_USERNAME") != null) {
     publishing {
         publications {
