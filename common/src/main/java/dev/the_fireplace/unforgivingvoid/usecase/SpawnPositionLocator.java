@@ -6,6 +6,7 @@ import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -14,7 +15,6 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.inject.Inject;
 import java.util.Optional;
-import java.util.Random;
 
 public final class SpawnPositionLocator
 {
@@ -30,7 +30,7 @@ public final class SpawnPositionLocator
 
     public BlockPos findSimilarPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
         Optional<Vec3> spawnVec;
-        Random rand = targetWorld.getRandom();
+        RandomSource rand = targetWorld.getRandom();
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.dimension(), targetWorld.dimension(), currentPos);
         int iteration = 0;
         do {
@@ -73,7 +73,7 @@ public final class SpawnPositionLocator
     }
 
     public BlockPos findSkyPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
-        Random rand = targetWorld.getRandom();
+        RandomSource rand = targetWorld.getRandom();
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.dimension(), targetWorld.dimension(), currentPos);
         int iteration = 0;
         do {
@@ -122,7 +122,7 @@ public final class SpawnPositionLocator
     }
 
     private Optional<Vec3> findSafePlatform(EntityType<?> entityType, ServerLevel targetWorld, BlockPos targetFocalPosition, int targetY) {
-        Random rand = targetWorld.getRandom();
+        RandomSource rand = targetWorld.getRandom();
 
         int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
         int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
@@ -133,7 +133,7 @@ public final class SpawnPositionLocator
     }
 
     private Optional<Vec3> findSafePlatform(EntityType<?> entityType, ServerLevel targetWorld, BlockPos targetFocalPosition) {
-        Random rand = targetWorld.getRandom();
+        RandomSource rand = targetWorld.getRandom();
 
         int targetX = applyHorizontalOffset(rand, targetFocalPosition.getX());
         int targetZ = applyHorizontalOffset(rand, targetFocalPosition.getZ());
@@ -159,7 +159,7 @@ public final class SpawnPositionLocator
         return inputPos;
     }
 
-    private int applyHorizontalOffset(Random rand, int xzCoordinate) {
+    private int applyHorizontalOffset(RandomSource rand, int xzCoordinate) {
         return xzCoordinate - horizontalOffsetRange + rand.nextInt(horizontalOffsetRange * 2);
     }
 

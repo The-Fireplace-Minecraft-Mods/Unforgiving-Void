@@ -7,7 +7,7 @@ import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigM
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.Level;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,7 +18,7 @@ import java.util.Set;
 public final class DimensionConfigManager
 {
     public static final String DOMAIN = UnforgivingVoidConstants.MODID + "_customDimensionConfigs";
-    public static final Set<ResourceLocation> DEFAULT_DIMENSIONS = Sets.newHashSet(DimensionType.OVERWORLD_EFFECTS, DimensionType.NETHER_EFFECTS, DimensionType.END_EFFECTS);
+    public static final Set<ResourceLocation> DEFAULT_DIMENSIONS = Sets.newHashSet(Level.OVERWORLD.location(), Level.NETHER.location(), Level.END.location());
     private final NamespacedHierarchicalConfigManager<DimensionConfig> hierarchicalConfigManager;
     private final ConfigStateManager configStateManager;
     private final FallbackDimensionConfig defaultSettings;

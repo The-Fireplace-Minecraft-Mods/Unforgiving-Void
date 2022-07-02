@@ -1,1 +1,1 @@
-Further improved the teleport handling to help prevent rubber band teleporting at high ping (solonovamax)
+Update to 1.19
