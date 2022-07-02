@@ -132,7 +132,7 @@ if (hasProperty('modrinthApiKey')) {
     modrinth {
         token = modrinthApiKey
         projectId = 'LYliJ0jT'
-        versionNumber = version
+        versionNumber = "$version+fabric"
         versionName = project.mod_version
         uploadFile = mainArtifactFile
         changelog = changelogFile.getText()
