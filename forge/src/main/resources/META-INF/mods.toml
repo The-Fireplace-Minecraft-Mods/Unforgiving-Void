@@ -38,7 +38,7 @@ side = "BOTH"
 
 [[dependencies.unforgivingvoid]]
 modId = "fireplacelib"
-mandatory = false
+mandatory = true
 versionRange = "[7,8)"
 ordering = "NONE"
 side = "BOTH"
