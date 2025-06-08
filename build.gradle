@@ -4,9 +4,15 @@ plugins {
     // Standard Artifact Publish
     id 'maven-publish'
     id 'signing'
-    id 'io.codearte.nexus-staging' version '0.30.0'
+    id 'org.jreleaser' version '1.18.0'
+    id "fabric-loom" version "1.10-SNAPSHOT" apply false
 }
-subprojects {
+group = project.maven_group
+version = "${project.mod_version}+${project.minecraft_version}"
+if (project.hasProperty('SNAPSHOT')) {
+    version = "${version}-SNAPSHOT"
+}
+subprojects { Project subProject ->
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
@@ -27,10 +33,6 @@ subprojects {
     }
 
     javadoc.options.addStringOption('Xdoclint:none', '-quiet')
-
-    nexusStaging {
-        packageGroup = project.maven_group
-    }
 
     jar {
         manifest {
@@ -59,6 +61,11 @@ subprojects {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
+
+        maven {
+            name = 'Central Portal Snapshots'
+            url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        }
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The
@@ -66,5 +73,48 @@ subprojects {
     // other mod developers.
     tasks.withType(GenerateModuleMetadata) {
         enabled = false
+    }
+
+    task copyArtifacts(type: Copy) {
+        from subProject.layout.buildDirectory.dir('staging-deploy')
+        into rootProject.layout.buildDirectory.dir('maven/staging-deploy')
+    }
+}
+
+jreleaser {
+    signing {
+        active = 'ALWAYS'
+        armored = true
+        verify = false
+    }
+    release {
+        github {
+            repoOwner = 'The-Fireplace-Minecraft-Mods'
+            name = 'Unforgiving-Void'
+            username = 'The-Fireplace'
+        }
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                'release-deploy' {
+                    active = 'RELEASE'
+                    url = 'https://central.sonatype.com/api/v1/publisher'
+                    stagingRepository('build/maven/staging-deploy')
+                }
+            }
+            nexus2 {
+                'snapshot-deploy' {
+                    active = 'SNAPSHOT'
+                    url = 'https://central.sonatype.com/repository/maven-snapshots'
+                    snapshotUrl = 'https://central.sonatype.com/repository/maven-snapshots'
+                    applyMavenCentralRules = true
+                    snapshotSupported = true
+                    closeRepository = true
+                    releaseRepository = true
+                    stagingRepository('build/maven/staging-deploy')
+                }
+            }
+        }
     }
 }

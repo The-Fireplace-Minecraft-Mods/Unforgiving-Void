@@ -1,5 +1,5 @@
-name: build against linux and create snapshot
-on: [ push ]
+name: build against linux and publish
+on: [ workflow_dispatch ]
 
 jobs:
     build:
@@ -36,7 +36,7 @@ jobs:
                 run: chmod +x ./gradlew
 
             -   name: publish to aggregate build directory
-                run: ./gradlew build publish -PSNAPSHOT=true
+                run: ./gradlew build publish
 
             -   name: capture build artifacts
                 uses: actions/upload-artifact@v4
@@ -45,13 +45,13 @@ jobs:
                     path: build/libs/
 
             -   name: jreleaser release published artifacts
-                run: ./gradlew jreleaserDeploy -PSNAPSHOT=true
+                run: ./gradlew jreleaserFullRelease
                 env:
                     JRELEASER_GPG_PASSPHRASE: ${{ secrets.NEXUS_GPG_SECRET_KEY_PASSWORD }}
                     JRELEASER_GPG_SECRET_KEY: ${{ secrets.NEXUS_GPG_SECRET_KEY_RING_FILE }}
                     JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    JRELEASER_NEXUS2_USERNAME: ${{ secrets.MAVENCENTRAL_USERNAME }}
-                    JRELEASER_NEXUS2_PASSWORD: ${{ secrets.MAVENCENTRAL_PASSWORD }}
+                    JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.MAVENCENTRAL_USERNAME }}
+                    JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.MAVENCENTRAL_PASSWORD }}
 
             -   name: capture JReleaser output
                 if: failure()
@@ -61,3 +61,10 @@ jobs:
                     path: |
                         build/jreleaser/trace.log
                         build/jreleaser/output.properties
+
+            -   name: hosting publish
+                if: success() || failure()
+                run: ./gradlew build curseforge modrinth
+                env:
+                    CURSEFORGE_API_KEY: ${{ secrets.CF_API_KEY }}
+                    MODRINTH_API_KEY: ${{ secrets.MR_API_KEY }}
