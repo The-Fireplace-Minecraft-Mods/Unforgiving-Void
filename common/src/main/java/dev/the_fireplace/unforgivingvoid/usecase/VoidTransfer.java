@@ -39,7 +39,7 @@ public final class VoidTransfer
     }
 
     public void initiateVoidTransfer(ServerPlayer serverPlayerEntity, MinecraftServer server) {
-        ServerLevel currentWorld = serverPlayerEntity.getLevel();
+        ServerLevel currentWorld = serverPlayerEntity.serverLevel();
         DimensionConfig dimensionConfig = dimensionConfigManager.getSettings(currentWorld.dimension().location());
 
         ServerLevel targetWorld = getTargetWorld(server, dimensionConfig);
@@ -59,7 +59,7 @@ public final class VoidTransfer
         UnforgivingVoidConstants.getLogger().debug(
             "Player teleport complete. New position is {}, and new world is {}",
             teleportedEntity.blockPosition().toShortString(),
-            teleportedEntity.getLevel().dimension().location()
+            teleportedEntity.level().dimension().location()
         );
     }
 

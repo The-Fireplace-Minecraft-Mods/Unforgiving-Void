@@ -8,15 +8,11 @@ import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import dev.the_fireplace.unforgivingvoid.usecase.QueueVoidTransfer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ProfilePublicKey;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -35,10 +31,10 @@ public abstract class ServerPlayerMixin extends Player
     @Inject(at = @At("TAIL"), method = "doTick")
     private void tick(CallbackInfo callbackInfo) {
         Injector injector = UnforgivingVoidConstants.getInjector();
-        DimensionConfig dimensionConfig = injector.getInstance(DimensionConfigManager.class).getSettings(this.level.dimension().location());
-        if (!this.level.isClientSide()
+        DimensionConfig dimensionConfig = injector.getInstance(DimensionConfigManager.class).getSettings(this.level().dimension().location());
+        if (!this.level().isClientSide()
             && dimensionConfig.isEnabled()
-            && this.blockPosition().getY() <= getBottomY(level) - dimensionConfig.getTriggerDistance()
+            && this.blockPosition().getY() <= getBottomY(this.level()) - dimensionConfig.getTriggerDistance()
             && !isChangingDimension()
         ) {
             MinecraftServer server = getServer();
@@ -46,7 +42,7 @@ public abstract class ServerPlayerMixin extends Player
                 UnforgivingVoidConstants.getLogger().debug(
                     "Player is below the minimum height. Teleporting to new dimension. Current position is {}, and current world is {}",
                     blockPosition().toShortString(),
-                    getServerLevel().dimension().location()
+                    this.level().dimension().location()
                 );
 
                 isChangingDimension = true;
@@ -59,9 +55,6 @@ public abstract class ServerPlayerMixin extends Player
     private int getBottomY(Level world) {
         return world.getMinBuildHeight();
     }
-
-    @Invoker("getLevel")
-    public abstract ServerLevel getServerLevel();
 
     @Shadow
     public abstract boolean isChangingDimension();
