@@ -25,7 +25,7 @@ side = "BOTH"
 [[dependencies.unforgivingvoid]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19,)"
+versionRange = "[1.19,1.19.3)"
 ordering = "NONE"
 side = "BOTH"
 
