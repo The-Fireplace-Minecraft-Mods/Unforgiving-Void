@@ -20,13 +20,13 @@
     "text.config.unforgivingvoid.option.targetDimension": "Target Dimension",
     "text.config.unforgivingvoid.option.targetDimension.desc[0]": "Which dimension should the player be sent to from the Void?",
     "text.config.unforgivingvoid.option.targetDimension.desc[1]": "Join a Singleplayer world before editing this for more options",
-  "text.config.unforgivingvoid.option.transferPositionMode": "Spawn Mode",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig": "Add Custom Dimension Settings",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[0]": "Choose a dimension ID then save",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[1]": "the settings to add it",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[2]": "Join a Singleplayer world before editing this for more options",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.error": "You've already added this dimension",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig": "DELETE THIS DIMENSION'S VOID SETTINGS",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[0]": "WARNING: THIS DIMENSION'S VOID SETTINGS",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[1]": "WILL BE REMOVED IF THIS IS TRUE/YES!"
+    "text.config.unforgivingvoid.option.transferPositionMode": "Spawn Mode",
+    "text.config.unforgivingvoid.option.addCustomDimensionConfig": "Add Custom Dimension Settings",
+    "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[0]": "Choose a dimension ID then save",
+    "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[1]": "the settings to add it",
+    "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[2]": "Join a Singleplayer world before editing this for more options",
+    "text.config.unforgivingvoid.option.addCustomDimensionConfig.error": "You've already added this dimension",
+    "text.config.unforgivingvoid.option.deleteCustomDimensionConfig": "DELETE THIS DIMENSION'S VOID SETTINGS",
+    "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[0]": "WARNING: THIS DIMENSION'S VOID SETTINGS",
+    "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[1]": "WILL BE REMOVED IF THIS IS TRUE/YES!"
 }
