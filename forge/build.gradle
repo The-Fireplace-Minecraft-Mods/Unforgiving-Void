@@ -24,7 +24,7 @@ apply plugin: 'org.spongepowered.mixin'
 archivesBaseName = "${archives_base_name}-Forge"
 final def mainArtifactFile = layout.buildDirectory.file("libs/${archivesBaseName}-${version}.jar").get().asFile
 final def changelogFile = file('../changelog.txt')
-final def supportedMinecraftVersions = [project.minecraft_version, '1.18.1', '1.18']
+final def supportedMinecraftVersions = [project.minecraft_version]
 
 repositories {
     maven { url 'https://maven.shedaniel.me/' }
