@@ -4,8 +4,7 @@ import dev.the_fireplace.lib.api.teleport.injectables.Teleporter;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -18,6 +17,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
@@ -50,9 +50,9 @@ public final class VoidTransfer
         }
 
         spawnPositionLocator.setHorizontalOffsetRange(dimensionConfig.getHorizontalDistanceOffset());
-        BlockPos spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
+        Vec3 spawnPos = getSpawnPos(serverPlayerEntity, currentWorld, dimensionConfig, targetWorld);
 
-        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+        Entity teleportedEntity = teleporter.teleport(serverPlayerEntity, targetWorld, spawnPos.x, spawnPos.y, spawnPos.z);
 
         applyStatusEffects((ServerPlayer) teleportedEntity, dimensionConfig);
         createAssistanceMaterials(dimensionConfig, targetWorld, spawnPos);
@@ -63,7 +63,7 @@ public final class VoidTransfer
         );
     }
 
-    private BlockPos getSpawnPos(ServerPlayer serverPlayerEntity, ServerLevel currentWorld, DimensionConfig dimensionConfig, ServerLevel targetWorld) {
+    private Vec3 getSpawnPos(ServerPlayer serverPlayerEntity, ServerLevel currentWorld, DimensionConfig dimensionConfig, ServerLevel targetWorld) {
         return switch (dimensionConfig.getTransferPositionMode()) {
             case SIMILAR ->
                 spawnPositionLocator.findSimilarPosition(serverPlayerEntity.getType(), currentWorld, targetWorld, serverPlayerEntity.blockPosition());
@@ -83,7 +83,7 @@ public final class VoidTransfer
     }
 
     private ResourceKey<Level> createTargetWorldRegistryKey(DimensionConfig dimensionConfig) {
-        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimensionConfig.getTargetDimension()));
+        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(dimensionConfig.getTargetDimension()));
     }
 
     private void applyStatusEffects(ServerPlayer serverPlayerEntity, DimensionConfig dimensionConfig) {
@@ -96,9 +96,9 @@ public final class VoidTransfer
         }
     }
 
-    private void createAssistanceMaterials(DimensionConfig dimensionConfig, ServerLevel targetWorld, BlockPos spawnPos) {
+    private void createAssistanceMaterials(DimensionConfig dimensionConfig, ServerLevel targetWorld, Vec3 spawnPos) {
         if (dimensionConfig.isDropObsidian()) {
-            targetWorld.addFreshEntity(new ItemEntity(targetWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), new ItemStack(Blocks.OBSIDIAN, 14)));
+            targetWorld.addFreshEntity(new ItemEntity(targetWorld, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(Blocks.OBSIDIAN, 14)));
         }
     }
 }

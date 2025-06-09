@@ -28,8 +28,8 @@ public abstract class ServerPlayerMixin extends Player
     @Shadow
     private boolean isChangingDimension;
 
-    protected ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile, @Nullable ProfilePublicKey profilePublicKey) {
-        super(world, pos, yaw, profile, profilePublicKey);
+    protected ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
+        super(world, pos, yaw, profile);
     }
 
     @Inject(at = @At("TAIL"), method = "doTick")

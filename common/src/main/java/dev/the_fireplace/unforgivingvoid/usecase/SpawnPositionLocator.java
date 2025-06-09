@@ -28,7 +28,7 @@ public final class SpawnPositionLocator
         this.safePosition = safePosition;
     }
 
-    public BlockPos findSimilarPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
+    public Vec3 findSimilarPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
         Optional<Vec3> spawnVec;
         RandomSource rand = targetWorld.getRandom();
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.dimension(), targetWorld.dimension(), currentPos);
@@ -48,10 +48,10 @@ public final class SpawnPositionLocator
             spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition, targetY);
         } while (spawnVec.isEmpty());
 
-        return new BlockPos(spawnVec.get());
+        return spawnVec.get();
     }
 
-    public BlockPos findSurfacePosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
+    public Vec3 findSurfacePosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
         Optional<Vec3> spawnVec;
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.dimension(), targetWorld.dimension(), currentPos);
         int iteration = 0;
@@ -69,10 +69,10 @@ public final class SpawnPositionLocator
             spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition);
         } while (spawnVec.isEmpty());
 
-        return new BlockPos(spawnVec.get());
+        return spawnVec.get();
     }
 
-    public BlockPos findSkyPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
+    public Vec3 findSkyPosition(EntityType<?> entityType, ServerLevel currentWorld, ServerLevel targetWorld, BlockPos currentPos) {
         RandomSource rand = targetWorld.getRandom();
         BlockPos targetFocalPosition = getDimensionScaledPosition(currentWorld.dimension(), targetWorld.dimension(), currentPos);
         int iteration = 0;
@@ -88,7 +88,7 @@ public final class SpawnPositionLocator
             BlockPos attemptPos = new BlockPos(targetX, targetY, targetZ);
 
             if (isSafeSky(entityType, targetWorld, attemptPos)) {
-                return attemptPos;
+                return attemptPos.getCenter();
             }
         } while (iteration++ < MAX_SCAN_ITERATIONS);
 
@@ -100,7 +100,7 @@ public final class SpawnPositionLocator
         return findSpawnPosition(entityType, targetWorld);
     }
 
-    public BlockPos findSpawnPosition(EntityType<?> entityType, ServerLevel targetWorld) {
+    public Vec3 findSpawnPosition(EntityType<?> entityType, ServerLevel targetWorld) {
         BlockPos targetFocalPosition = targetWorld.getSharedSpawnPos();
         Optional<Vec3> spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition);
         int iteration = 0;
@@ -112,13 +112,13 @@ public final class SpawnPositionLocator
                     "Max attempts exceeded for finding spawn position in {}, falling back to the built in spawn position even though it may be unsafe.",
                     targetWorld.dimension().location().toString()
                 );
-                return targetFocalPosition;
+                return targetFocalPosition.getCenter();
             }
 
             spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition);
         }
 
-        return new BlockPos(spawnVec.get());
+        return spawnVec.get();
     }
 
     private Optional<Vec3> findSafePlatform(EntityType<?> entityType, ServerLevel targetWorld, BlockPos targetFocalPosition, int targetY) {

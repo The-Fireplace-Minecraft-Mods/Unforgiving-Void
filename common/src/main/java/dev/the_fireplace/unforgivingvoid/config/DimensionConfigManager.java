@@ -5,7 +5,7 @@ import dev.the_fireplace.lib.api.lazyio.injectables.ConfigStateManager;
 import dev.the_fireplace.lib.api.lazyio.injectables.HierarchicalConfigManagerFactory;
 import dev.the_fireplace.lib.api.lazyio.interfaces.NamespacedHierarchicalConfigManager;
 import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
@@ -36,7 +36,7 @@ public final class DimensionConfigManager
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            () -> UnforgivingVoidConstants.getServer().registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).keySet()
+            () -> UnforgivingVoidConstants.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet()
         );
     }
 
