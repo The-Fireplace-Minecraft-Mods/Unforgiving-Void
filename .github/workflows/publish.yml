@@ -44,6 +44,12 @@ jobs:
                     name: Artifacts
                     path: build/libs/
 
+            -   name: hosting publish
+                run: ./gradlew build curseforge modrinth
+                env:
+                    CURSEFORGE_API_KEY: ${{ secrets.CF_API_KEY }}
+                    MODRINTH_API_KEY: ${{ secrets.MR_API_KEY }}
+
             -   name: jreleaser release published artifacts
                 run: ./gradlew jreleaserFullRelease
                 env:
@@ -61,10 +67,3 @@ jobs:
                     path: |
                         build/jreleaser/trace.log
                         build/jreleaser/output.properties
-
-            -   name: hosting publish
-                if: success() || failure()
-                run: ./gradlew build curseforge modrinth
-                env:
-                    CURSEFORGE_API_KEY: ${{ secrets.CF_API_KEY }}
-                    MODRINTH_API_KEY: ${{ secrets.MR_API_KEY }}
