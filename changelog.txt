@@ -1,1 +1,2 @@
 Update to newer versions
+Update social links in mod metadata
