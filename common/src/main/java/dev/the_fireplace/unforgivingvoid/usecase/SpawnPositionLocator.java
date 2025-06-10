@@ -144,7 +144,7 @@ public final class SpawnPositionLocator
     }
 
     private boolean isSafeSky(EntityType<?> entityType, ServerLevel targetWorld, BlockPos blockPos) {
-        AABB skySpawnBoundingBox = entityType.getAABB(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5)
+        AABB skySpawnBoundingBox = entityType.getSpawnAABB(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5)
             .setMinY(blockPos.getY() - 16); // minus 16, to guarantee there's always (at least) 16 blocks of space below the player (so they don't spawn on the ground)
         return targetWorld.noCollision(skySpawnBoundingBox);
     }

@@ -13,4 +13,4 @@ pluginManagement {
 }
 
 rootProject.name = 'Unforgiving-Void'
-include('common', 'fabric', 'forge')
+include('common', 'fabric')
