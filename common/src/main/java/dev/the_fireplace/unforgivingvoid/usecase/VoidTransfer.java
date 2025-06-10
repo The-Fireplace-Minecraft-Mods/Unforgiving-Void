@@ -78,12 +78,21 @@ public final class VoidTransfer
     @Nullable
     private ServerLevel getTargetWorld(MinecraftServer server, DimensionConfig dimensionConfig) {
         ResourceKey<Level> targetWorldRegistryKey = createTargetWorldRegistryKey(dimensionConfig);
+        if (targetWorldRegistryKey == null) {
+            return null;
+        }
 
         return server.getLevel(targetWorldRegistryKey);
     }
 
+    @Nullable
     private ResourceKey<Level> createTargetWorldRegistryKey(DimensionConfig dimensionConfig) {
-        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(dimensionConfig.getTargetDimension()));
+        ResourceLocation resourceLocation = ResourceLocation.tryParse(dimensionConfig.getTargetDimension());
+        if (resourceLocation == null) {
+            UnforgivingVoidConstants.getLogger().error("Target dimension not a valid resource location: {}", dimensionConfig.getTargetDimension());
+            return null;
+        }
+        return ResourceKey.create(Registries.DIMENSION, resourceLocation);
     }
 
     private void applyStatusEffects(ServerPlayer serverPlayerEntity, DimensionConfig dimensionConfig) {

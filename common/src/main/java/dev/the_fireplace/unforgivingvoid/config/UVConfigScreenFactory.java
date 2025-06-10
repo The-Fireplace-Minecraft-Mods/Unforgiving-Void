@@ -140,11 +140,11 @@ public final class UVConfigScreenFactory
             dimensionConfigManager.getDimensionIdsWithoutCustomSettings().stream().map(ResourceLocation::toString).sorted().collect(Collectors.toList()),
             newValue -> {
                 if (!newValue.isEmpty()) {
-                    dimensionConfigManager.addCustom(new ResourceLocation(newValue), fallbackDimensionConfig.clone());
+                    dimensionConfigManager.addCustom(ResourceLocation.tryParse(newValue), fallbackDimensionConfig.clone());
                 }
             }
         ).setDescriptionRowCount((byte) 3).setErrorSupplier(value ->
-            dimensionConfigManager.isCustom(new ResourceLocation(value))
+            dimensionConfigManager.isCustom(ResourceLocation.tryParse(value))
                 ? Optional.of(translator.getTranslatedText(OPTION_TRANSLATION_BASE + "addCustomDimensionConfig.error"))
                 : Optional.empty()
         );
