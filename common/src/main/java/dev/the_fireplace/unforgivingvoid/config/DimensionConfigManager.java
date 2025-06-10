@@ -36,7 +36,7 @@ public final class DimensionConfigManager
             DOMAIN,
             defaultSettings,
             DEFAULT_DIMENSIONS,
-            () -> UnforgivingVoidConstants.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet()
+            () -> UnforgivingVoidConstants.getServer().registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).keySet()
         );
     }
 

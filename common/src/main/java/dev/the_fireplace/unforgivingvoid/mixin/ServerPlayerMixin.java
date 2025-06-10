@@ -53,7 +53,7 @@ public abstract class ServerPlayerMixin extends Player
     }
 
     private int getBottomY(Level world) {
-        return world.getMinBuildHeight();
+        return world.getMinY();
     }
 
     @Shadow

@@ -43,7 +43,7 @@ public final class SpawnPositionLocator
                 );
                 return findSpawnPosition(entityType, targetWorld);
             }
-            int targetY = rand.nextInt(targetWorld.getLogicalHeight() - 20) + 10 + targetWorld.getMinBuildHeight();
+            int targetY = rand.nextInt(targetWorld.getLogicalHeight() - 20) + 10 + targetWorld.getMinY();
 
             spawnVec = findSafePlatform(entityType, targetWorld, targetFocalPosition, targetY);
         } while (spawnVec.isEmpty());
