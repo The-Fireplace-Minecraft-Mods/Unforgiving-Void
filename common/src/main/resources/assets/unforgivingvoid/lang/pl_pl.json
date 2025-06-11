@@ -22,11 +22,11 @@
   "text.config.unforgivingvoid.option.targetDimension.desc[1]": "Przed edycją dołącz do świata jednoosobowego, aby zobaczyć więcej opcji",
   "text.config.unforgivingvoid.option.transferPositionMode": "Tryb Spawnu",
   "text.config.unforgivingvoid.option.addCustomDimensionConfig": "Dodaj Własne Ustawienia Wymiaru",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[0]": "Choose a dimension ID then save",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[1]": "the settings to add it",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[2]": "Join a Singleplayer world before editing this for more options",
-  "text.config.unforgivingvoid.option.addCustomDimensionConfig.error": "You've already added this dimension",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig": "DELETE THIS DIMENSION'S VOID SETTINGS",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[0]": "WARNING: THIS DIMENSION'S VOID SETTINGS",
-  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[1]": "WILL BE REMOVED IF THIS IS TRUE/YES!"
+  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[0]": "Wybierz ID wymiaru, a następnie zapisz",
+  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[1]": "ustawienia, aby go dodać",
+  "text.config.unforgivingvoid.option.addCustomDimensionConfig.desc[2]": "Przed edycją dołącz do świata jednoosobowego, aby zobaczyć więcej opcj",
+  "text.config.unforgivingvoid.option.addCustomDimensionConfig.error": "Już dodałeś ten wymiar",
+  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig": "USUŃ USTAWIENIA PUSTKI TEGO WYMIARU",
+  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[0]": "OSTRZEŻENIE: USTAWIENIA PUSTKI TEGO WYMIARU",
+  "text.config.unforgivingvoid.option.deleteCustomDimensionConfig.desc[1]": "ZOSTANĄ USUNIĘTE, JEŚLI USTAWISZ TO NA PRAWDA/TAK!"
 }
