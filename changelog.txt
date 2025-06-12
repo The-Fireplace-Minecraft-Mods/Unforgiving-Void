@@ -1,1 +1,2 @@
 Add Polish translation (Fhilips613)
+[1.17.X] Require Annotated DI 4.0.7/Fireplace Lib 7.1.5 or newer
