@@ -6,7 +6,6 @@ import dev.the_fireplace.unforgivingvoid.UnforgivingVoidConstants;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfig;
 import dev.the_fireplace.unforgivingvoid.config.DimensionConfigManager;
 import dev.the_fireplace.unforgivingvoid.usecase.QueueVoidTransfer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -24,8 +23,8 @@ public abstract class ServerPlayerMixin extends Player
     @Shadow
     private boolean isChangingDimension;
 
-    protected ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile profile) {
-        super(world, pos, yaw, profile);
+    protected ServerPlayerMixin(Level world, GameProfile profile) {
+        super(world, profile);
     }
 
     @Inject(at = @At("TAIL"), method = "doTick")
